@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="48" height="48" viewBox="0 0 48 48">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_383" data-name="Rectangle 383" width="48" height="48" transform="translate(827 313)" fill="#fff" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.364" y1="0.159" x2="0.73" y2="1.027" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#d4f7ff"/>
+      <stop offset="1" stop-color="#a2e3e9"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.601" y1="1.392" x2="0.42" y2="0.153" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="-1.855" y1="0.335" x2="-1.855" y2="1.271" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a2e3e9" stop-opacity="0"/>
+      <stop offset="1" stop-color="#518cd2"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-4" x1="1.11" y1="-241.45" x2="1.11" y2="-225.806" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#a34a9e"/>
+      <stop offset="1" stop-color="#343168"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-5" x1="1.11" y1="-235.64" x2="1.11" y2="-219.996" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-6" x1="0.896" y1="-229.83" x2="0.896" y2="-214.187" xlink:href="#linear-gradient-4"/>
+    <linearGradient id="linear-gradient-7" x1="1.836" y1="0.927" x2="0.357" y2="0.371" xlink:href="#linear-gradient-3"/>
+    <linearGradient id="linear-gradient-8" x1="0.273" y1="-0.063" x2="0.65" y2="0.873" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff4974"/>
+      <stop offset="0.45" stop-color="#fe4773"/>
+      <stop offset="0.629" stop-color="#fc406d"/>
+      <stop offset="0.761" stop-color="#f73464"/>
+      <stop offset="0.868" stop-color="#f12257"/>
+      <stop offset="0.961" stop-color="#e80c46"/>
+      <stop offset="1" stop-color="#e4003d"/>
+    </linearGradient>
+  </defs>
+  <g id="not_successful" data-name="not successful" transform="translate(-827 -313)" clip-path="url(#clip-path)">
+    <g id="wrong" transform="translate(827 313)">
+      <path id="Path_982" data-name="Path 982" d="M36.752,43.1H1.733A1.733,1.733,0,0,1,0,41.364V9.661A4.758,4.758,0,0,1,4.758,4.9H43.242a4.758,4.758,0,0,0-4.758,4.758v31.7A1.732,1.732,0,0,1,36.752,43.1Z" fill="url(#linear-gradient)"/>
+      <path id="Path_983" data-name="Path 983" d="M38.484,15.878h7.783A1.733,1.733,0,0,0,48,14.146V9.661a4.758,4.758,0,0,0-9.516,0Z" fill="url(#linear-gradient-2)"/>
+      <path id="Path_984" data-name="Path 984" d="M38.484,33.262v8.1A1.733,1.733,0,0,1,36.752,43.1H1.733A1.732,1.732,0,0,1,0,41.364v-8.1Z" fill="url(#linear-gradient-3)"/>
+      <path id="Path_985" data-name="Path 985" d="M20.075,27.892h-14a.5.5,0,0,0-.5.5v1.094a.5.5,0,0,0,.5.5h14a.5.5,0,0,0,.5-.5V28.4A.5.5,0,0,0,20.075,27.892Z" fill="url(#linear-gradient-4)"/>
+      <path id="Path_986" data-name="Path 986" d="M20.075,21.783h-14a.5.5,0,0,0-.5.5v1.094a.5.5,0,0,0,.5.5h14a.5.5,0,0,0,.5-.5V22.288A.5.5,0,0,0,20.075,21.783Z" fill="url(#linear-gradient-5)"/>
+      <path id="Path_987" data-name="Path 987" d="M28.176,15.674H6.074a.5.5,0,0,0-.5.5v1.094a.5.5,0,0,0,.5.5h22.1a.5.5,0,0,0,.5-.5V16.179A.5.5,0,0,0,28.176,15.674Z" fill="url(#linear-gradient-6)"/>
+      <path id="Path_988" data-name="Path 988" d="M38.484,21.041l-.314.314L33.645,16.83a3.107,3.107,0,1,0-4.394,4.394l4.525,4.525-4.524,4.524a3.109,3.109,0,0,0-.737,3.224h0a3.1,3.1,0,0,0,.737,1.17l8.258,8.251a1.731,1.731,0,0,0,.975-1.556V21.041Z" fill="url(#linear-gradient-7)"/>
+      <path id="Path_989" data-name="Path 989" d="M42.565,25.75l4.525-4.525A3.107,3.107,0,1,0,42.7,16.83L38.17,21.355,33.645,16.83a3.107,3.107,0,0,0-4.394,4.394l4.525,4.525-4.524,4.524a3.109,3.109,0,0,0-.737,3.224h0a3.11,3.11,0,0,0,5.131,1.17l4.524-4.524,4.524,4.524a3.11,3.11,0,0,0,5.131-1.17h0a3.109,3.109,0,0,0-.737-3.224Z" fill="url(#linear-gradient-8)"/>
+    </g>
+  </g>
+</svg>

@@ -5,26 +5,22 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 // components
 import Signup from '../features/Signup/Index'
-import Login from '../features/Login/Index'
+import Loginindex from '../features/Login/Index'
+import Login from '../features/Login/Pages/Login'
 
-const LoginStack = createStackNavigator();
+const AuthStack = createStackNavigator();
 const SignupStack = createStackNavigator();
 
 const LoginRoutes = () => {
     return (
-        <LoginStack.Navigator>
-            <LoginStack.Screen name="login" component={Login} options={{ headerShown: false}} />
-        </LoginStack.Navigator>
+        <AuthStack.Navigator initialRouteName="index">
+            <AuthStack.Screen name="index" component={Loginindex} options={{ headerShown: false}} />
+            <AuthStack.Screen name="login" component={Login} options={{ headerShown: false}} />
+            <AuthStack.Screen name="signup" component={Signup} options={{ headerShown: false}} />
+        </AuthStack.Navigator>
     )
 }
 
-const SignUpRoutes = () => {
-    return (
-        <SignupStack.Navigator>
-            <SignupStack.Screen name="signup" component={Signup} />
-        </SignupStack.Navigator>
-    )
-}
 
 const AuthChecker = () => {
     return <LoginRoutes />

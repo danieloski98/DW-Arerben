@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_1099" data-name="Path 1099" d="M0,0H20V20H0Z" transform="translate(1250 186)" fill="#4d4d4e" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="export_icon" data-name="export icon" transform="translate(-1250 -186)" clip-path="url(#clip-path)">
+    <g id="export" transform="translate(1251 186)">
+      <path id="Path_1100" data-name="Path 1100" d="M15.848,8.281H12.86v1.773h2.989c.889,0,1.578.454,1.578.845v7.863c0,.391-.69.845-1.578.845H4.552c-.889,0-1.578-.454-1.578-.845V10.9c0-.391.69-.845,1.578-.845H7.54V8.281H4.552C2.672,8.281,1.2,9.431,1.2,10.9v7.863c0,1.468,1.472,2.618,3.352,2.618h11.3c1.879,0,3.352-1.15,3.352-2.618V10.9C19.2,9.431,17.727,8.281,15.848,8.281Z" transform="translate(-1.2 -1.38)" fill="#4d4d4e"/>
+      <path id="Path_1101" data-name="Path 1101" d="M8.674,4.42A.883.883,0,0,0,9.3,4.16l1.11-1.11v9.021a.887.887,0,1,0,1.773,0V2.99l1.17,1.17a.887.887,0,0,0,1.254-1.254L11.961.259A.883.883,0,0,0,11.334,0H11.32a.883.883,0,0,0-.627.259L8.047,2.906A.887.887,0,0,0,8.674,4.42Z" transform="translate(-2.298)" fill="#4d4d4e"/>
+    </g>
+  </g>
+</svg>

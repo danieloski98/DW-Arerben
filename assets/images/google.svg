@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_57" data-name="Rectangle 57" width="20" height="20" transform="translate(653 257)" fill="gray" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <g id="google" transform="translate(-653 -257)" clip-path="url(#clip-path)">
+    <g id="search_10_" data-name="search (10)" transform="translate(654.153 258.153)">
+      <path id="Path_37" data-name="Path 37" d="M3.921,12.4l-.616,2.3-2.251.048A8.862,8.862,0,0,1,.989,6.481h0l2,.367.878,1.992a5.28,5.28,0,0,0,.05,3.555Z" transform="translate(0 -1.703)" fill="gray"/>
+      <path id="Path_38" data-name="Path 38" d="M20.762,9.758a8.843,8.843,0,0,1-3.154,8.552h0l-2.524-.129-.357-2.23a5.273,5.273,0,0,0,2.269-2.692H12.264v-3.5h8.5Z" transform="translate(-3.223 -2.564)" fill="gray"/>
+      <path id="Path_39" data-name="Path 39" d="M14.761,19.556h0A8.85,8.85,0,0,1,1.43,16.85L4.3,14.5A5.262,5.262,0,0,0,11.879,17.2Z" transform="translate(-0.376 -3.811)" fill="gray"/>
+      <path id="Path_40" data-name="Path 40" d="M14.846,2.037,11.98,4.383A5.261,5.261,0,0,0,4.224,7.138L1.342,4.778h0a8.849,8.849,0,0,1,13.5-2.742Z" transform="translate(-0.353)" fill="gray"/>
+    </g>
+  </g>
+</svg>

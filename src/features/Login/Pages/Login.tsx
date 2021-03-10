@@ -1,12 +1,12 @@
 import React from 'react'
-import { View, Text, StatusBar, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StatusBar, StyleSheet } from 'react-native'
 import {Feather} from '@expo/vector-icons'
-import { Theme } from '../../theme'
+import { Theme } from '../../../theme'
 
 // components
-import LoginForm from '../Login/Components/LoginForm';
+import LoginForm from '../Components/LoginForm';
 
-export default function Signup(props: any) {
+export default function Login(props: any) {
     return (
         <View style={style.parent}>
 
@@ -18,9 +18,7 @@ export default function Signup(props: any) {
             </View>
 
             <View style={style.form}>
-                <ScrollView style={{ width: '100%', height: Theme.height}}>
-                    <LoginForm />
-                </ScrollView>
+                <LoginForm />
             </View>
 
         </View>

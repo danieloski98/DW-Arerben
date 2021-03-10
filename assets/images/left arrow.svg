@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="9.216" height="15.286" viewBox="0 0 9.216 15.286">
+  <g id="left_arrow" data-name="left arrow" transform="translate(7.944 1.287) rotate(90)">
+    <line id="Line_33" data-name="Line 33" x2="9.038" y2="0.1" transform="translate(0.07 0.196) rotate(45)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+    <line id="Line_34" data-name="Line 34" x1="6.336" y2="6.657" transform="translate(6.39 0)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+  </g>
+</svg>

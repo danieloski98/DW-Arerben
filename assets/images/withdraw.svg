@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <g id="withdraw" transform="translate(-42 -1263)">
+    <rect id="Rectangle_131" data-name="Rectangle 131" width="32" height="32" rx="5" transform="translate(42 1263)" fill="#fbe5db"/>
+    <g id="Iconly_Light_Arrow_-_Right" data-name="Iconly/Light/Arrow - Right" transform="translate(67.127 1277.52) rotate(135)">
+      <g id="Arrow_-_Right" data-name="Arrow - Right" transform="translate(15 0) rotate(90)">
+        <path id="Stroke_1" data-name="Stroke 1" d="M0,0V15" transform="translate(6.025 0)" fill="none" stroke="#e55313" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+        <path id="Stroke_3" data-name="Stroke 3" d="M12.049,6.05,6.025,0,0,6.05" transform="translate(0)" fill="none" stroke="#e55313" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

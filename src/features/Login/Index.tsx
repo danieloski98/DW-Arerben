@@ -1,8 +1,13 @@
 import React from 'react'
-import { View, Text, Dimensions, StyleSheet, Platform, Button, TouchableOpacity } from 'react-native'
+import { View, Text, Dimensions, StyleSheet, Platform, Button, TouchableOpacity, Image } from 'react-native'
 import { Theme } from '../../theme';
+import { LinearGradient } from 'expo-linear-gradient'
 
-export default function Index() {
+// svg component
+import GoogleIcon from '../../../assets/svgs/google';
+
+export default function Index(props: any) {
+    console.log(props)
     return (
         <View style={style.parent}>
             <View style={style.headerContainer}>
@@ -12,25 +17,49 @@ export default function Index() {
 
             <View style={style.secondConatiner}>
                 <View style={style.whitePart}>
-                    <View style={[StyleSheet.absoluteFillObject, {backgroundColor: 'transparent', width: Theme.width, height: Theme.width,  zIndex: 2}]}>
-                        <View style={{ flex: 1, borderRadius: Theme.width / 2, backgroundColor: 'orange', alignItems: 'flex-end', justifyContent: 'center'}}>
-                            <View style={{ width: 200, height: 100, backgroundColor: 'white', borderTopLeftRadius: 10, borderBottomLeftRadius: 10, elevation: 7, shadowColor: 'grey', shadowRadius: 3, shadowOffset: {width: 4, height: 8}, shadowOpacity: 0.7, marginTop: 150}}></View>
+
+                    <View style={[StyleSheet.absoluteFillObject, style.banner ]}>
+                        <View style={style.orangeCircle}>
+
+                            <Image source={require('../../../assets/images/referral.png')} resizeMode="contain" style={[StyleSheet.absoluteFillObject, style.image]} />
+                            
+                        </View>
+
+                        <View style={style.floatingBanner}>
+                            <View style={style.ffbp}>
+                                <Text style={{ color: 'white', fontSize: Theme.header - 5}}>ALERT</Text>
+                            </View>
+
+                            <View style={style.sfbp}>
+                                <View style={{ flexDirection: 'row'}}>
+                                    <Text style={{ fontSize: Theme.header, color: '#F46929', fontWeight: '700'}}>100,000</Text>
+                                </View>
+                                <Text style={{ fontSize: Theme.normalText, fontWeight: '700'}}>ROI Profit</Text>
+                            </View>
+
                         </View>
                     </View>
 
-                    <View style={{ flex: 0.6, backgroundColor: 'white', marginHorizontal: 20, borderBottomRightRadius: 10, borderBottomLeftRadius: 10, justifyContent: 'flex-end', paddingBottom: 10, paddingHorizontal: 30, transform: [
-                        {translateY: Theme.width / 100 * 65}
-                    ]}}>
-                        <TouchableOpacity style={{ width: '100%', height: '15%', marginBottom: 5, backgroundColor: 'orange', justifyContent: 'center', alignItems: 'center', borderRadius: 10}}>
-                           <Text style={{ color: 'white'}}>Create Account</Text>
-                        </TouchableOpacity>
+                    <View style={style.btnHolder}>
+                        
+                        <LinearGradient
+                        style={style.signupBtn}
+                        start={{x: 0.0, y: 0.4}}
+                        end={{x: 1, y: 0.0}}
+                        colors={['#F46929', '#FFE5D9']}>
+                            <TouchableOpacity style={{flex: 1, justifyContent: 'center', backgroundColor: 'transparent'}}
+                            onPress={() => alert("Press me")}>
+                            <Text style={{ color: 'white'}}>Create Account</Text>
+                            </TouchableOpacity>
+                        </LinearGradient>
 
-                        <TouchableOpacity style={{ width: '100%', height: '15%', marginBottom: 5, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center', borderRadius: 10}}>
+                        <TouchableOpacity style={style.loginBtn} onPress={() => props.navigation.navigate('login')}>
                            <Text style={{ color: 'white'}}>Login</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{ width: '100%', height: '15%', marginBottom: 5, backgroundColor: 'transparent', justifyContent: 'center', alignItems: 'center', borderRadius: 10, borderWidth: 2, borderColor: 'black'}}>
-                           <Text style={{ color: 'orange'}}>Continue with Google</Text>
+                        <TouchableOpacity style={style.googleBtn}>
+                            <GoogleIcon />
+                           <Text style={{ color: '#222222', marginLeft: 20}}>Continue with Google</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -75,5 +104,101 @@ const style = StyleSheet.create({
         borderBottomLeftRadius: 5, 
         borderBottomRightRadius: 5, 
         overflow: 'visible',
+    },
+    btnHolder: {
+        flex: 0.6, 
+        backgroundColor: 'white', 
+        marginHorizontal: 20, 
+        borderBottomRightRadius: 10, 
+        borderBottomLeftRadius: 10, 
+        justifyContent: 'flex-end', 
+        paddingBottom: 10, 
+        paddingHorizontal: 30, 
+        transform: [
+            {translateY: Theme.width / 100 * 65}
+        ]
+    },
+    signupBtn: {
+        width: '100%', 
+        height: '15%', 
+        marginBottom: 5, 
+        backgroundColor: '#F46929', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderRadius: 10
+    },
+    loginBtn: {
+        width: '100%', 
+        height: '15%', 
+        marginBottom: 5, 
+        backgroundColor: 'black', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderRadius: 10
+    },
+    googleBtn: {
+        width: '100%', 
+        height: '15%', 
+        marginBottom: 5, 
+        backgroundColor: 'transparent', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderRadius: 10, 
+        borderWidth: 2, 
+        borderColor: '#222222', 
+        flexDirection: 'row'
+    },
+    banner: {
+        backgroundColor: 'transparent', 
+        width: Theme.width, 
+        height: Theme.width,  
+        zIndex: 2
+    },
+    orangeCircle: {
+        flex: 1, 
+        borderRadius: Theme.width / 2, 
+        backgroundColor: '#FF892F', 
+        alignItems: 'flex-end', 
+        justifyContent: 'flex-end', 
+        overflow: 'hidden'
+    },
+    image: {
+        transform: [
+            {translateX: -Theme.width / 100 * 30}
+        ]
+    },
+    floatingBanner: {
+        width: 200, 
+        height: 100, 
+        backgroundColor: 'transparent', 
+        borderTopLeftRadius: 10, 
+        borderBottomLeftRadius: 10, 
+        position: 'absolute', 
+        elevation: 5, 
+        shadowColor: 'grey', 
+        shadowRadius: 3, 
+        shadowOffset: {width: 4, height: 8}, 
+        shadowOpacity: 0.7, 
+        transform: [
+            {translateX: Theme.width / 100 * 65},
+            {translateY: Theme.height / 100 * 35}
+        ]
+    },
+    ffbp: {
+        width: '40%', 
+        backgroundColor: '#111111', 
+        height: '30%', 
+        borderTopLeftRadius: 10, 
+        borderTopRightRadius: 10, 
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+    sfbp: {
+        flex: 1, 
+        backgroundColor: 'white', 
+        borderBottomLeftRadius: 10, 
+        borderBottomRightRadius: 10, 
+        padding: 10, 
+        justifyContent: 'space-evenly'
     }
 });

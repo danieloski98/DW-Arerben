@@ -1,0 +1,14 @@
+<svg id="Iconly_Light_Calendar" data-name="Iconly/Light/Calendar" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="Calendar" transform="translate(2.5 1.667)">
+    <path id="Line_200" d="M0,.473H14.853" transform="translate(0.077 5.697)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_201" d="M.459.473H.466" transform="translate(10.743 8.952)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_202" d="M.459.473H.466" transform="translate(7.045 8.952)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_203" d="M.459.473H.466" transform="translate(3.34 8.952)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_204" d="M.459.473H.466" transform="translate(10.743 12.191)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_205" d="M.459.473H.466" transform="translate(7.045 12.191)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_206" d="M.459.473H.466" transform="translate(3.34 12.191)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_207" d="M.463,0V2.742" transform="translate(10.407)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Line_208" d="M.463,0V2.742" transform="translate(3.675)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="Path" d="M11.032,0H3.976C1.529,0,0,1.363,0,3.869v7.541a3.62,3.62,0,0,0,3.976,3.94h7.048c2.455,0,3.976-1.371,3.976-3.877v-7.6C15.008,1.363,13.487,0,11.032,0Z" transform="translate(0 1.316)" fill="none" stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="checkbox" fill="none" stroke="#f46929" stroke-width="1.8">
+    <rect width="24" height="24" rx="5" stroke="none"/>
+    <rect x="0.9" y="0.9" width="22.2" height="22.2" rx="4.1" fill="none"/>
+  </g>
+</svg>
