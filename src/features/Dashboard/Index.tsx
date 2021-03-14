@@ -11,6 +11,7 @@ import Investments from './Pages/Investments';
 import Account from './Pages/Account';
 import ROI_History from './Pages/ROI-History';
 import More from './Pages/More';
+import Notifications from './Pages/Notifications'
 
 
 function Icon(props: {iconName: any, name: string, focused: boolean}) {
@@ -52,6 +53,7 @@ function Tabs() {
 const StackNavigator = () => (
     <Stack.Navigator initialRouteName="dashboard">
         <Stack.Screen name="dashboard" component={Tabs} options={{ headerShown: false }} />
+        <Stack.Screen name="notifications" component={Notifications} options={{ headerShown: false }} />
     </Stack.Navigator>
 )
 

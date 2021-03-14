@@ -4,18 +4,23 @@ import { Theme } from '../theme'
 import { Feather } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
 
-export default function Tabbar() {
+interface IProps {
+    name: string;
+}
+
+export default function CustomizableTabber(props: IProps) {
+
     const navigation = useNavigation();
 
     return (
         <View style={style.parent}>
             <View style={style.imageBox}>
-                <Image source={require('../../assets/images/avatar.png')} resizeMode="contain" style={[StyleSheet.absoluteFillObject, {width: '50%', height: '100%'}]} />
-                <Text style={{ marginLeft: '50%'}}>Alexis sanche</Text>
+                <Feather name="chevron-left" size={25} color="grey"  onPress={() => navigation.goBack()}/>
+                <Text style={{ marginLeft: '5%', fontSize: Theme.normalText, fontWeight: '700' }}>{props.name}</Text>
             </View>
             <View style={style.iconBox}>
-                <Feather name="search" size={25} color="grey" style={{ marginRight: 10}} />
-                <Feather name="bell" size={25} color="grey" onPress={() => navigation.navigate("notifications")} />
+                {/* <Feather name="search" size={30} color="grey" style={{ marginRight: 10}} />
+                <Feather name="bell" size={30} color="grey" /> */}
             </View>
         </View>
     )
