@@ -32,7 +32,7 @@ export default function LoginForm(props: any) {
                     <Text>Password</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '60%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="lock" size={20} color="#BCBCBC" />
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} />
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} secureTextEntry={true} />
                         <Feather name="eye-off" size={20} color={Theme.primaryColor} />
                     </View>
                 </View>
@@ -45,9 +45,11 @@ export default function LoginForm(props: any) {
                     colors={['#F46929', '#FFE5D9']}
                     style={{ width: '100%', height: '12%', borderRadius: 10, marginTop: 20}}
                 >
-                    <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                    <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}
+                    onPress={() => navigation.navigate("dashboard")}
+                    >
                         <Feather name="lock" color="white" size={30} />
-                        <Text style={{ color: 'white', fontSize: Theme.normalText, marginLeft: 10}}>Signup</Text>
+                        <Text style={{ color: 'white', fontSize: Theme.normalText, marginLeft: 10}}>Login</Text>
                     </TouchableOpacity>
                 </LinearGradient>
 

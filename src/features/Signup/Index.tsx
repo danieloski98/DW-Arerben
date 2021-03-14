@@ -4,7 +4,7 @@ import {Feather} from '@expo/vector-icons'
 import { Theme } from '../../theme'
 
 // components
-import LoginForm from '../Login/Components/LoginForm';
+import SignupForm from './Compoents/SignupForm';
 
 export default function Signup(props: any) {
     return (
@@ -18,8 +18,8 @@ export default function Signup(props: any) {
             </View>
 
             <View style={style.form}>
-                <ScrollView style={{ width: '100%', height: Theme.height}}>
-                    <LoginForm />
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    <SignupForm />
                 </ScrollView>
             </View>
 
