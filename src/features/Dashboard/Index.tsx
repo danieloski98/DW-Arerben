@@ -12,6 +12,9 @@ import Account from './Pages/Account';
 import ROI_History from './Pages/ROI-History';
 import More from './Pages/More';
 import Notifications from './Pages/Notifications'
+import SearchPage from './Pages/SearchPage';
+import UpdatePage from './Pages/UpdatePage';
+import UploadDocumentPage from './Pages/UploadDocumentPage';
 
 
 function Icon(props: {iconName: any, name: string, focused: boolean}) {
@@ -54,6 +57,9 @@ const StackNavigator = () => (
     <Stack.Navigator initialRouteName="dashboard">
         <Stack.Screen name="dashboard" component={Tabs} options={{ headerShown: false }} />
         <Stack.Screen name="notifications" component={Notifications} options={{ headerShown: false }} />
+        <Stack.Screen name="search" component={SearchPage} options={{ headerShown: false }} />
+        <Stack.Screen name="update" component={UpdatePage} options={{ headerShown: false }} />
+        <Stack.Screen name="uploaddocument" component={UploadDocumentPage} options={{ headerShown: false }} />
     </Stack.Navigator>
 )
 

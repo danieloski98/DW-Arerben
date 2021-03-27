@@ -14,7 +14,7 @@ export default function Tabbar() {
                 <Text style={{ marginLeft: '50%'}}>Alexis sanche</Text>
             </View>
             <View style={style.iconBox}>
-                <Feather name="search" size={25} color="grey" style={{ marginRight: 10}} />
+                <Feather name="search" size={25} color="grey" style={{ marginRight: 10}} onPress={() => navigation.navigate("search")} />
                 <Feather name="bell" size={25} color="grey" onPress={() => navigation.navigate("notifications")} />
             </View>
         </View>

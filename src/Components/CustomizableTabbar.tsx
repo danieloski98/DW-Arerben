@@ -6,6 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 
 interface IProps {
     name: string;
+    rightItem?: JSX.Element;
 }
 
 export default function CustomizableTabber(props: IProps) {
@@ -19,8 +20,7 @@ export default function CustomizableTabber(props: IProps) {
                 <Text style={{ marginLeft: '5%', fontSize: Theme.normalText, fontWeight: '700' }}>{props.name}</Text>
             </View>
             <View style={style.iconBox}>
-                {/* <Feather name="search" size={30} color="grey" style={{ marginRight: 10}} />
-                <Feather name="bell" size={30} color="grey" /> */}
+                {props.rightItem}
             </View>
         </View>
     )
@@ -36,7 +36,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 10
+        paddingHorizontal: Theme.majorSpace,
     },
     imageBox: {
         width: '50%',

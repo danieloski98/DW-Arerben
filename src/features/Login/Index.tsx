@@ -48,7 +48,7 @@ export default function Index(props: any) {
                         end={{x: 1, y: 0.0}}
                         colors={['#F46929', '#FFE5D9']}>
                             <TouchableOpacity style={{flex: 1, justifyContent: 'center', backgroundColor: 'transparent'}}
-                            onPress={() => alert("Press me")}>
+                            onPress={() => props.navigation.navigate('signup')}>
                             <Text style={{ color: 'white'}}>Create Account</Text>
                             </TouchableOpacity>
                         </LinearGradient>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 // icon
 import EditIcon from '../../../../assets/svgs/Edit_profile'
@@ -7,6 +8,8 @@ import GradientButton from '../../../Components/GradientButton'
 import { Theme } from '../../../theme'
 
 export default function UpdateProfileCard() {
+    const navigation = useNavigation();
+
     return (
         <View style={style.parent}>
 
@@ -20,7 +23,7 @@ export default function UpdateProfileCard() {
 
             <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
                 <View style={{ width: '50%', height: '100%'}}>
-                    <GradientButton text="Update Profile" onPress={() => alert("Align")} />
+                    <GradientButton text="Update Profile" onPress={() => navigation.navigate("update", {section: 1})} />
                 </View>
             </View>
 

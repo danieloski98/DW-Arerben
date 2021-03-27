@@ -34,7 +34,7 @@ export default function PackageCard(props: IProps) {
     const typeText = (type: string) => {
         switch(type) {
             case "Classic": {
-                return "Classic (Monthly";
+                return "Classic (Monthly)";
             }
             case "Premium": {
                 return "Premium (Quaterly)";
