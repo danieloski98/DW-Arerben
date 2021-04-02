@@ -8,6 +8,8 @@ import { Theme } from '../../../theme';
 import HeadersScrollView from '../Components/UpdateProfile/HeadersScrollView';
 import TextBox from '../Components/TextBox';
 import UpdateProfileForm from '../Components/UpdateProfile/UpdateProfileForm';
+import MeansOfIdentification from '../Components/MeansOfIdentification/MeansOfIdentification';
+import NextOfKin from '../Components/NextOfKin/NextofKin';
 
 export const CancelButton = () => {
     const navigation = useNavigation();
@@ -18,6 +20,20 @@ export const CancelButton = () => {
     )
 }
 
+const SwitchForm = (props: {value: number}) => {
+    switch(props.value) {
+        case 0: {
+            return <UpdateProfileForm /> as JSX.Element|null
+        }
+        case 1: {
+            return <MeansOfIdentification /> as JSX.Element|null
+        }
+        case 2: {
+            return <NextOfKin /> as JSX.Element|null
+        }
+    }
+}
+
 export default function UpdatePage(props: { navigation: StackNavigationProp<any>, route: RouteProp<{params: {section: number}}, "params">}) {
 
     const [index, setIndex] = React.useState(props.route.params.section);
@@ -25,6 +41,7 @@ export default function UpdatePage(props: { navigation: StackNavigationProp<any>
     const headers = ["Personal Information", "Means of Identification", "Next of Kin"];
     
     const setPageIndex = (pageNo: number) => {
+        console.log(pageNo);
         setPage(pageNo);
     }
 
@@ -39,7 +56,7 @@ export default function UpdatePage(props: { navigation: StackNavigationProp<any>
 
                     <View style={{ width: '100%', height: 'auto', backgroundColor: 'white', padding: Theme.majorSpace, overflow: 'visible', marginBottom: 50 }}>
                     
-                           <UpdateProfileForm />
+                           {<SwitchForm value={page} /> as JSX.Element|null }
                        
                     </View>
 

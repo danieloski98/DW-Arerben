@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Feather } from '@expo/vector-icons'
 
 
-export default function UpdateProfileForm() {
+export default function NextOfKin() {
     const [show, setShow] = React.useState(false);
     const [date, setDate] = React.useState(new Date());
 
@@ -18,9 +18,14 @@ export default function UpdateProfileForm() {
     }
     return (
         <View style={{ flex: 1, overflow:'visible'  }}>
-            <Text>FULLNAME</Text>
+            <Text>NEXT OF KIN NAME</Text>
             <View style={{ width: '100%', height: 50, marginBottom: 20}}>
                 <TextBox />
+            </View>
+
+            <Text>SEX</Text>
+            <View style={{ width: '100%', height: Theme.height/100*6, marginBottom: 20, zIndex: 5}}>
+                <DropDown />
             </View>
 
             <Text>DATE OF BIRTH</Text>
@@ -35,32 +40,24 @@ export default function UpdateProfileForm() {
 
 
 
-            <Text>SEX</Text>
+            <Text>MARITAL STATUS</Text>
             <View style={{ width: '100%', height: Theme.height/100*6, marginBottom: 20, zIndex: 5}}>
                 <DropDown />
             </View>
 
-            <Text>MARITAL STATUS</Text>
-            <View style={{ width: '100%', marginBottom: 20, height: Theme.height/100*6, zIndex: 4}}>
-                <DropDown />
-            </View>
 
-            <Text>NATIONALITY</Text>
+            <Text>STATE OF ORIGIN</Text>
             <View style={{ width: '100%', marginBottom: 20, height: Theme.height/100*6, zIndex: 3}}>
                 <DropDown />
             </View>
 
-            <Text>STATE OF ORIGIN</Text>
-            <View style={{ width: '100%', height: 50, marginBottom: 20, zIndex: 2}}>
-                <DropDown />
+
+            <Text>PHONE NUMBER</Text>
+            <View style={{ width: '100%', height: 50, marginBottom: 20}}>
+                <TextBox />
             </View>
 
-            <Text>STATE</Text>
-            <View style={{ width: '100%', height: 50, marginBottom: 20,zIndex: 1}}>
-                <DropDown />
-            </View>
-
-            <Text>CITY</Text>
+            <Text>EMAIL</Text>
             <View style={{ width: '100%', height: 50, marginBottom: 20}}>
                 <TextBox />
             </View>

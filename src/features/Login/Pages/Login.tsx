@@ -42,7 +42,7 @@ const style = StyleSheet.create({
         marginLeft: 10
     },
     form: {
-        flex: 1, 
+        flex: 0.9, 
         backgroundColor: 'white', 
         borderRadius: 20,
         overflow: 'hidden'

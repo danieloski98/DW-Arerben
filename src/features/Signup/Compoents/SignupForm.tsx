@@ -1,13 +1,81 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
 import { Theme } from '../../../theme'
 import { Feather } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
+import { useFormik } from 'formik'
+import * as yup from 'yup';
+import { URL } from '../../../utils/Url'
+import * as axios from 'axios';
+
+const signupSchema = yup.object({
+    email: yup.string().email("Invalid Email").required("Your email is required"),
+    password: yup.string().min(8, "Minimium of 8 characters").required("Your password is required"),
+    firstname: yup.string().required("Your firstname is required"),
+    lastname: yup.string().required("Your lastname is required"),
+    phone: yup.string().required("Your phone number is required"),
+})
 
 export default function LoginForm(props: any) {
 
     const navigation = useNavigation();
+    const [showPassword, setShowPassword] = React.useState(true);
+    const [loading, setLoading] = React.useState(false);
+
+    // formik
+    const formik = useFormik({
+        initialValues: {email: '', password: '', firstname: '', lastname: '', phone: ''},
+        validationSchema: signupSchema,
+        onSubmit: () => {},
+    })
+
+      // submit Function
+      const  submit = async() => {
+        if(!formik.dirty) {
+            Alert.alert("Please you have to fill the form");
+            return;
+        }
+        if (!formik.isValid) {
+            Alert.alert("Please fill in the form correctly!")
+            return;
+        }
+        
+        try {
+            // make the request
+        setLoading(true);
+        const request = await axios.default.post(`${URL}/auth/register`, formik.values, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const json = request.data;
+        console.log(json);
+
+        switch(request.status) {
+            case 201: {
+                Alert.alert("Login Successful");
+                setLoading(false);
+                navigation.navigate("dashboard");
+                break;
+            }
+            case 401: {
+                setLoading(false);
+                Alert.alert(`${json['details']}`);
+                break;
+            }
+            default: {
+                Alert.alert("An error occured.");
+                setLoading(false);
+            }
+        }
+        } catch (error) {
+            console.log(error)
+            setLoading(false);
+            Alert.alert("Internal Server error")
+        }
+    }
 
     return (
         <View style={style.parent}>
@@ -22,45 +90,60 @@ export default function LoginForm(props: any) {
                     <Text>Firstname</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="user" size={20} color="#BCBCBC" />
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} />
-                        <Feather name="check" size={20} color={Theme.primaryColor} />
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.firstname} onChangeText={formik.handleChange('firstname')} onBlur={() => formik.handleBlur('firstname')} />
+                        {formik.touched.firstname && !formik.errors.firstname && <Feather name="check" size={20} color={Theme.primaryColor} />}
                     </View>
+                    {
+                        formik.errors.firstname && <Text style={{ color: 'red'}}>{formik.errors.firstname}</Text>
+                    }
                 </View>
 
                 <View style={{ width: '100%', height: '12%' }}>
                     <Text>Lastname</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="user" size={20} color="#BCBCBC" />
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} />
-                        <Feather name="check" size={20} color={Theme.primaryColor} />
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.lastname} onChangeText={formik.handleChange('lastname')} onBlur={() => formik.handleBlur('lastname')} />
+                        {formik.touched.lastname && !formik.errors.lastname && <Feather name="check" size={20} color={Theme.primaryColor} />}
                     </View>
+                    {
+                        formik.errors.lastname && <Text style={{ color: 'red'}}>{formik.errors.lastname}</Text>
+                    }
                 </View>
 
                 <View style={{ width: '100%', height: '12%' }}>
                     <Text>Email</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="mail" size={20} color="#BCBCBC" />
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} />
-                        <Feather name="check" size={20} color={Theme.primaryColor} />
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.email} onChangeText={formik.handleChange('email')} onBlur={() => formik.handleBlur('email')} />
+                        {formik.touched.email && !formik.errors.email && <Feather name="check" size={20} color={Theme.primaryColor} />}
                     </View>
+                    {
+                        formik.errors.email && <Text style={{ color: 'red'}}>{formik.errors.email}</Text>
+                    }
                 </View>
 
                 <View style={{ width: '100%', height: '12%' }}>
                     <Text>Phone number</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Text style={{ paddingRight: 10, borderRightWidth: 2, borderRightColor: 'grey'}}>+234</Text>
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} />
-                        <Feather name="check" size={20} color={Theme.primaryColor} />
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.phone} onChangeText={formik.handleChange('phone')} onBlur={() => formik.handleBlur('phone')} />
+                        {formik.touched.phone && !formik.errors.phone && <Feather name="check" size={20} color={Theme.primaryColor} />}
                     </View>
+                    {
+                        formik.errors.phone && <Text style={{ color: 'red'}}>{formik.errors.phone}</Text>
+                    }
                 </View>
 
                 <View style={{ width: '100%', height: '12%', marginTop: 10}}>
                     <Text>Password</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="lock" size={20} color="#BCBCBC" />
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} />
-                        <Feather name="eye-off" size={20} color={Theme.primaryColor} />
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.password} onChangeText={formik.handleChange('password')} onBlur={() => formik.handleBlur('password')}/>
+                        <Feather name={showPassword ? 'eye':"eye-off"} size={20} color={Theme.primaryColor} onPress={() => setShowPassword(prev => !prev)} />
                     </View>
+                    {
+                        formik.errors.password && <Text style={{ color: 'red'}}>{formik.errors.password}</Text>
+                    }
                 </View>
 
 
@@ -70,8 +153,10 @@ export default function LoginForm(props: any) {
                     colors={['#F46929', '#FFE5D9']}
                     style={{ width: '100%', height: '7%', borderRadius: 10, marginTop: 20}}
                 >
-                    <TouchableOpacity style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                        <Text style={{ color: 'white', fontSize: Theme.normalText }}>Create Account</Text>
+                    <TouchableOpacity disabled={loading} style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}
+                    onPress={submit}
+                    >
+                        {loading ? <ActivityIndicator size="large" color="white" />: <Text style={{ color: 'white', fontSize: Theme.normalText }}>Create Account</Text>}
                     </TouchableOpacity>
                 </LinearGradient>
 

@@ -22,7 +22,7 @@ export default function ChangePasswordCard() {
 
             <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
                 <View style={{ width: '50%', height: '100%'}}>
-                    <GradientButton text="Change" onPress={() => navigation.navigate("update", {section: 3})} />
+                    <GradientButton text="Change" onPress={() => navigation.navigate("changepassword", {section: 3})} />
                 </View>
             </View>
 

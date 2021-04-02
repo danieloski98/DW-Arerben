@@ -19,13 +19,13 @@ export default function HeadersScrollView(props: IProps) {
         if (index === 0) {
             scrollRef.current?.scrollTo({y: 0, x: 0, animated: true});
             setIndex(index);
-            props.onChange();
+            props.onChange(index);
             return;
         }
 
         setIndex(index);
         scrollRef.current?.scrollTo({y: 0, x: Theme.width/100*60*index, animated: true})
-        props.onChange();
+        props.onChange(index);
     }
 
     return (
