@@ -12,8 +12,8 @@ import * as axios from 'axios';
 const signupSchema = yup.object({
     email: yup.string().email("Invalid Email").required("Your email is required"),
     password: yup.string().min(8, "Minimium of 8 characters").required("Your password is required"),
-    firstname: yup.string().required("Your firstname is required"),
-    lastname: yup.string().required("Your lastname is required"),
+    first_name: yup.string().required("Your firstname is required"),
+    last_name: yup.string().required("Your lastname is required"),
     phone: yup.string().required("Your phone number is required"),
 })
 
@@ -25,7 +25,7 @@ export default function LoginForm(props: any) {
 
     // formik
     const formik = useFormik({
-        initialValues: {email: '', password: '', firstname: '', lastname: '', phone: ''},
+        initialValues: {email: '', password: '', first_name: '', last_name: '', phone: ''},
         validationSchema: signupSchema,
         onSubmit: () => {},
     })
@@ -44,25 +44,27 @@ export default function LoginForm(props: any) {
         try {
             // make the request
         setLoading(true);
-        const request = await axios.default.post(`${URL}/auth/register`, formik.values, {
+        const request = await fetch(`${URL}/auth/register/`, {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify( formik.values,)
         })
 
-        const json = request.data;
+        const json = await request.json();
         console.log(json);
 
         switch(request.status) {
             case 201: {
                 Alert.alert("Login Successful");
                 setLoading(false);
-                navigation.navigate("dashboard");
+                navigation.navigate("login");
                 break;
             }
             case 401: {
                 setLoading(false);
-                Alert.alert(`${json['details']}`);
+                Alert.alert(`${json['detail']}`);
                 break;
             }
             default: {
@@ -90,11 +92,11 @@ export default function LoginForm(props: any) {
                     <Text>Firstname</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="user" size={20} color="#BCBCBC" />
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.firstname} onChangeText={formik.handleChange('firstname')} onBlur={() => formik.handleBlur('firstname')} />
-                        {formik.touched.firstname && !formik.errors.firstname && <Feather name="check" size={20} color={Theme.primaryColor} />}
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.first_name} onChangeText={formik.handleChange('first_name')} onBlur={() => formik.handleBlur('first_name')} />
+                        {formik.touched.first_name && !formik.errors.first_name && <Feather name="check" size={20} color={Theme.primaryColor} />}
                     </View>
                     {
-                        formik.errors.firstname && <Text style={{ color: 'red'}}>{formik.errors.firstname}</Text>
+                        formik.errors.first_name && <Text style={{ color: 'red'}}>{formik.errors.first_name}</Text>
                     }
                 </View>
 
@@ -102,11 +104,11 @@ export default function LoginForm(props: any) {
                     <Text>Lastname</Text>
                     <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="user" size={20} color="#BCBCBC" />
-                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.lastname} onChangeText={formik.handleChange('lastname')} onBlur={() => formik.handleBlur('lastname')} />
-                        {formik.touched.lastname && !formik.errors.lastname && <Feather name="check" size={20} color={Theme.primaryColor} />}
+                        <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.last_name} onChangeText={formik.handleChange('last_name')} onBlur={() => formik.handleBlur('last_name')} />
+                        {formik.touched.last_name && !formik.errors.last_name && <Feather name="check" size={20} color={Theme.primaryColor} />}
                     </View>
                     {
-                        formik.errors.lastname && <Text style={{ color: 'red'}}>{formik.errors.lastname}</Text>
+                        formik.errors.last_name && <Text style={{ color: 'red'}}>{formik.errors.last_name}</Text>
                     }
                 </View>
 

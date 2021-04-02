@@ -16,6 +16,8 @@ import SearchPage from './Pages/SearchPage';
 import UpdatePage from './Pages/UpdatePage';
 import UploadDocumentPage from './Pages/UploadDocumentPage';
 import ChanePassword from './Pages/ChanePassword';
+import RegisterAgent from './Pages/RegisterAgent';
+import Referrals from './Pages/Referrals';
 
 
 function Icon(props: {iconName: any, name: string, focused: boolean}) {
@@ -62,6 +64,8 @@ const StackNavigator = () => (
         <Stack.Screen name="update" component={UpdatePage} options={{ headerShown: false }} />
         <Stack.Screen name="uploaddocument" component={UploadDocumentPage} options={{ headerShown: false }} />
         <Stack.Screen name="changepassword" component={ChanePassword} options={{ headerShown: false }} />
+        <Stack.Screen name="registeragent" component={RegisterAgent} options={{ headerShown: false }} />
+        <Stack.Screen name="referrals" component={Referrals} options={{ headerShown: false }} />
     </Stack.Navigator>
 )
 

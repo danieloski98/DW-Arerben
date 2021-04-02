@@ -8,6 +8,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup';
 import { URL } from '../../../utils/Url'
 import * as axios from 'axios';
+import useUserDetails, { IUSer } from '../../../Hooks/useUserDetails'
 
 // login schema
 
@@ -17,6 +18,8 @@ const LoginSchema = yup.object({
 })
 
 export default function LoginForm(props: any) {
+
+    const userDetails = useUserDetails();
 
     const navigation = useNavigation();
     const [showPassword, setShowPassword] = React.useState(true);
@@ -42,24 +45,35 @@ export default function LoginForm(props: any) {
         
         try {
             // make the request
+        console.log(formik.values);
+
         setLoading(true);
-        const request = await axios.default.post(`https://mydwa.herokuapp.com/auth/login`, formik.values, {
-            headers: {
-                "Content-Type": "application/json",
-                accept: "application/json"
-            }
+        const request = await fetch(`https://mydwa.herokuapp.com/auth/login/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            accept: "application/json"
+            },
+         body: JSON.stringify(formik.values)
         })
 
-
+        const json: any = await request.json();
+        console.log(request.json);
         switch(request.status) {
-            case 201: {
+            case 200: {
                 Alert.alert("Login Successful");
-                console.log(request.data);
                 setLoading(false);
+                userDetails.setUserAtom(json);
                 navigation.navigate("dashboard");
                 break;
             }
+            case 401: {
+                Alert.alert(json['detail'])
+                setLoading(false);
+                break;
+            }
             default: {
+                console.log(request.status);
                 Alert.alert("An error occured.");
                 setLoading(false);
             }
@@ -67,7 +81,7 @@ export default function LoginForm(props: any) {
         } catch (error) {
             console.log(error)
             setLoading(false);
-            Alert.alert("Internal Server error")
+            Alert.alert("Internal Server error");
         }
     }
 

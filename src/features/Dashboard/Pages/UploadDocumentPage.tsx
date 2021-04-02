@@ -10,7 +10,7 @@ import UpdateProfileForm from '../Components/UpdateProfile/UpdateProfileForm'
 import { CancelButton } from './UpdatePage'
 
 
-const SwitchForm = (props: {value: number}) => {
+export const SwitchForm = (props: {value: number}) => {
     switch(props.value) {
         case 0: {
             return <UpdateProfileForm /> as JSX.Element|null

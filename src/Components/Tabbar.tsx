@@ -3,15 +3,19 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import { Theme } from '../theme'
 import { Feather } from '@expo/vector-icons';
 import {useNavigation} from '@react-navigation/native';
+import useUserDetails from '../Hooks/useUserDetails';
 
 export default function Tabbar() {
     const navigation = useNavigation();
+    const userDetails = useUserDetails();
 
     return (
         <View style={style.parent}>
             <View style={style.imageBox}>
-                <Image source={require('../../assets/images/avatar.png')} resizeMode="contain" style={[StyleSheet.absoluteFillObject, {width: '50%', height: '100%'}]} />
-                <Text style={{ marginLeft: '50%'}}>Alexis sanche</Text>
+                <View style={{ width: '30%', height: '160%', backgroundColor: 'transparent'}}>
+                    <Image source={require('../../assets/images/avatar.png')} resizeMode="cover" style={{ height: '50%', width: '100%'}} />
+                </View>
+                <Text style={{ width: '100%', marginLeft: 10, textAlign: 'center' }}>{userDetails.user.email}</Text>
             </View>
             <View style={style.iconBox}>
                 <Feather name="search" size={25} color="grey" style={{ marginRight: 10}} onPress={() => navigation.navigate("search")} />
@@ -34,11 +38,11 @@ const style = StyleSheet.create({
         paddingHorizontal: 10
     },
     imageBox: {
-        width: '50%',
-        height: '80%',
+        flex: 1,
         backgroundColor: 'transparent',
         flexDirection: 'row',
         alignItems: 'center',
+        paddingRight: 50,
     },
     iconBox: {
         width: '30%',
