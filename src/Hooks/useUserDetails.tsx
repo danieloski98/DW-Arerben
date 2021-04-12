@@ -7,6 +7,9 @@ export interface IUSer {
     email: string;
     first_name: string;
     last_name: string;
+    id: string;
+    access: string;
+    refresh: string;
 }
 
 export default function useUserDetails() {

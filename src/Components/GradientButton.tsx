@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { Theme } from '../theme'
 import { Feather } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
@@ -10,10 +10,10 @@ function call() {}
 interface IProps {
     onPress: typeof call;
     text: string;
+    loading?: boolean;
 }
 
 export default function GradientButton(props: IProps) {
-
     const navigation = useNavigation();
 
     return (
@@ -27,7 +27,9 @@ export default function GradientButton(props: IProps) {
                     onPress={props.onPress}
                     >
                         {/* <Feather name="lock" color="white" size={30} /> */}
-                        <Text style={{ color: 'white', fontSize: Theme.normalText, marginLeft: 10}}>{props.text}</Text>
+                       {
+                           props.loading ? <ActivityIndicator size="large" color="white" /> :  <Text style={{ color: 'white', fontSize: Theme.normalText, marginLeft: 10}}>{props.text}</Text>
+                       }
                     </TouchableOpacity>
         </LinearGradient>
     )

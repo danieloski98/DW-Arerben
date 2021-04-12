@@ -15,7 +15,7 @@ export default function Tabbar() {
                 <View style={{ width: '30%', height: '160%', backgroundColor: 'transparent'}}>
                     <Image source={require('../../assets/images/avatar.png')} resizeMode="cover" style={{ height: '50%', width: '100%'}} />
                 </View>
-                <Text style={{ width: '100%', marginLeft: 10, textAlign: 'center' }}>{userDetails.user.email}</Text>
+                <Text style={{ width: '100%', marginLeft: 10, textAlign: 'left' }}>{userDetails.user.first_name}</Text>
             </View>
             <View style={style.iconBox}>
                 <Feather name="search" size={25} color="grey" style={{ marginRight: 10}} onPress={() => navigation.navigate("search")} />

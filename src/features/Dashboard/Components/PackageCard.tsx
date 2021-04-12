@@ -100,7 +100,7 @@ export default function PackageCard(props: IProps) {
 
             </View>
             <View style={{ width: '100%', height: 50, alignItems: 'center', marginBottom: 20}}>
-                <View style={{ width: '50%', height: '100%'}}>
+                <View style={{ width: '100%', height: 50}}>
                     <GradientButton text="Choose package" onPress={() => alert(props.type)} />
                 </View>
             </View>

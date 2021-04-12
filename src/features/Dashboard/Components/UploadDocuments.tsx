@@ -16,12 +16,12 @@ export default function UploadDocumentsCard() {
                 <EditIcon />
             </View>
 
-            <Text style={{ marginTop: 20, textAlign: 'center', fontSize: Theme.header, fontWeight: '500'}}>Upload Document</Text>
+            <Text style={{ marginTop: 20, textAlign: 'center', fontSize: Theme.header - 3, fontWeight: '700'}}>Upload Document</Text>
 
-            <Text style={{ marginTop: 20, textAlign: 'center', fontSize: Theme.normalText}}>Complete your profile so you can set yourself up for earning and investing</Text>
+            <Text style={{ marginTop: 10, textAlign: 'center', fontSize: Theme.normalText}}>Complete your profile so you can set yourself up for earning and investing</Text>
 
             <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
-                <View style={{ width: '50%', height: '100%'}}>
+                <View style={{ width: '50%', height: 50 }}>
                     <GradientButton text="Upload" onPress={() => navigation.navigate("uploaddocument", {section: 2})} />
                 </View>
             </View>

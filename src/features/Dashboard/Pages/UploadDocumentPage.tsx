@@ -7,26 +7,29 @@ import MeansOfIdentification from '../Components/MeansOfIdentification/MeansOfId
 import NextOfKin from '../Components/NextOfKin/NextofKin'
 import HeadersScrollView from '../Components/UpdateProfile/HeadersScrollView'
 import UpdateProfileForm from '../Components/UpdateProfile/UpdateProfileForm'
+import Signature from '../Components/UploadDocuments/Signature'
+import UploadProfilePic from '../Components/UploadDocuments/UploadProfilePic'
+import ValidIDCard from '../Components/UploadDocuments/ValidIdCard'
 import { CancelButton } from './UpdatePage'
 
 
 export const SwitchForm = (props: {value: number}) => {
     switch(props.value) {
         case 0: {
-            return <UpdateProfileForm /> as JSX.Element|null
+            return <UploadProfilePic />
         }
         case 1: {
-            return <MeansOfIdentification /> as JSX.Element|null
+            return <ValidIDCard />
         }
         case 2: {
-            return <NextOfKin /> as JSX.Element|null
+            return <Signature />
         }
     }
 }
 
 
 export default function UploadDocumentPage() {
-    const [page, setPage] = React.useState(1);
+    const [page, setPage] = React.useState(0);
     const headers = ["Profile Picture", "Valid I.D Card", "Signature"];
 
     const setPageIndex = (pageNo: number) => {
@@ -39,7 +42,7 @@ export default function UploadDocumentPage() {
             <ScrollView style={{ flex: 1, paddingTop: 30, paddingHorizontal: Theme.majorSpace }}>
 
                 <View style={{ flex: 1, backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 10, overflow: 'hidden',}}>
-                    <HeadersScrollView index={1} items={headers} onChange={setPageIndex} />
+                    <HeadersScrollView index={page} items={headers} onChange={setPageIndex} />
 
                     <View style={{ width: '100%', height: 'auto', backgroundColor: 'white', padding: Theme.majorSpace, overflow: 'visible', marginBottom: 50 }}>
                     

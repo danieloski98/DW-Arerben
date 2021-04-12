@@ -42,14 +42,21 @@ export default function LoginForm(props: any) {
         }
         
         try {
+
+        const formData = new FormData();
+
+        const val = formik.values as object;
+
+        for (const pro in val) {
+            const value: any = val[pro];
+
+            formData.append(`${pro}`, `${value}`)
+        }
             // make the request
         setLoading(true);
         const request = await fetch(`${URL}/auth/register/`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify( formik.values,)
+            body: formData
         })
 
         const json = await request.json();
@@ -57,7 +64,7 @@ export default function LoginForm(props: any) {
 
         switch(request.status) {
             case 201: {
-                Alert.alert("Login Successful");
+                Alert.alert("Signup Successful");
                 setLoading(false);
                 navigation.navigate("login");
                 break;
@@ -90,7 +97,7 @@ export default function LoginForm(props: any) {
 
                 <View style={{ width: '100%', height: '12%' }}>
                     <Text>Firstname</Text>
-                    <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', width: '100%', height: 50, backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="user" size={20} color="#BCBCBC" />
                         <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.first_name} onChangeText={formik.handleChange('first_name')} onBlur={() => formik.handleBlur('first_name')} />
                         {formik.touched.first_name && !formik.errors.first_name && <Feather name="check" size={20} color={Theme.primaryColor} />}
@@ -102,7 +109,7 @@ export default function LoginForm(props: any) {
 
                 <View style={{ width: '100%', height: '12%' }}>
                     <Text>Lastname</Text>
-                    <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', width: '100%', height: 50, backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="user" size={20} color="#BCBCBC" />
                         <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.last_name} onChangeText={formik.handleChange('last_name')} onBlur={() => formik.handleBlur('last_name')} />
                         {formik.touched.last_name && !formik.errors.last_name && <Feather name="check" size={20} color={Theme.primaryColor} />}
@@ -114,7 +121,7 @@ export default function LoginForm(props: any) {
 
                 <View style={{ width: '100%', height: '12%' }}>
                     <Text>Email</Text>
-                    <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', width: '100%', height: 50, backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="mail" size={20} color="#BCBCBC" />
                         <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.email} onChangeText={formik.handleChange('email')} onBlur={() => formik.handleBlur('email')} />
                         {formik.touched.email && !formik.errors.email && <Feather name="check" size={20} color={Theme.primaryColor} />}
@@ -126,7 +133,7 @@ export default function LoginForm(props: any) {
 
                 <View style={{ width: '100%', height: '12%' }}>
                     <Text>Phone number</Text>
-                    <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', width: '100%', height: 50, backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Text style={{ paddingRight: 10, borderRightWidth: 2, borderRightColor: 'grey'}}>+234</Text>
                         <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.phone} onChangeText={formik.handleChange('phone')} onBlur={() => formik.handleBlur('phone')} />
                         {formik.touched.phone && !formik.errors.phone && <Feather name="check" size={20} color={Theme.primaryColor} />}
@@ -138,7 +145,7 @@ export default function LoginForm(props: any) {
 
                 <View style={{ width: '100%', height: '12%', marginTop: 10}}>
                     <Text>Password</Text>
-                    <View style={{ flexDirection: 'row', width: '100%', height: '55%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', width: '100%', height: 50, backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="lock" size={20} color="#BCBCBC" />
                         <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.password} onChangeText={formik.handleChange('password')} onBlur={() => formik.handleBlur('password')}/>
                         <Feather name={showPassword ? 'eye':"eye-off"} size={20} color={Theme.primaryColor} onPress={() => setShowPassword(prev => !prev)} />
@@ -153,7 +160,7 @@ export default function LoginForm(props: any) {
                     start={{x: 0.0, y: 0.4}}
                     end={{x: 1, y: 0.0}}
                     colors={['#F46929', '#FFE5D9']}
-                    style={{ width: '100%', height: '7%', borderRadius: 10, marginTop: 20}}
+                    style={{ width: '100%', height: 50, borderRadius: 10, marginTop: 20}}
                 >
                     <TouchableOpacity disabled={loading} style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}
                     onPress={submit}

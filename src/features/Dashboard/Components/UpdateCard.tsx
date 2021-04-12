@@ -22,28 +22,29 @@ export default function UpdateCard() {
           <View style={style.borderBox}>
             <ProfileUpdate />
           </View>
-          <Text style={{ marginTop: 10 }}>Update Profile</Text>
+          <Text style={{ marginTop: 10,  fontSize: Theme.normalText }}>Update Profile</Text>
         </View>
 
         <View style={style.box}>
           <View style={style.borderBox}>
             <UpdateDocuments />
           </View>
-          <Text style={{ marginTop: 10 }}>Update Documents</Text>
+          <Text style={{ marginTop: 10,  fontSize: Theme.normalText }}>Update Documents</Text>
         </View>
 
         <View style={style.box}>
           <View style={style.borderBox}>
             <Password />
           </View>
-          <Text style={{ marginTop: 10 }}>Change DWA Password</Text>
+          <Text style={{ marginTop: 10, fontSize: Theme.normalText }}>Change DWA Password</Text>
         </View>
         
-        <View style={{ width: Theme.width / 100 * 70, height: Theme.height / 100 *7,}}>
+        <View style={{ width: '100%', height: 50,}}>
             <GradientButton text="Update Documents" onPress={() => alert("Press")} />
         </View>
 
       </View>
+
     </View>
   );
 }
@@ -62,24 +63,27 @@ const style = StyleSheet.create({
   },
   flexbox: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     flexWrap: "wrap",
     justifyContent: "flex-start",
-    paddingBottom: 30
+    paddingBottom: 30,
+    alignItems: 'center'
   },
   box: {
-    width: Theme.width / 100 * 35,
+    width: '100%',
     height: Theme.height / 100 * 20,
     justifyContent: "center",
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    alignItems: 'center'
   },
   borderBox: {
-    width: "50%",
-    height: "50%",
+    width: 100,
+    height: 100,
     borderRadius: 300,
-    borderStyle: "dashed",
-    borderWidth: 2,
-    borderColor: Theme.primaryColor,
+    backgroundColor: '#FFEBE2',
+    // borderStyle: "dashed",
+    // borderWidth: 2,
+    // borderColor: Theme.primaryColor,
     justifyContent: "center",
     alignItems: "center",
   },

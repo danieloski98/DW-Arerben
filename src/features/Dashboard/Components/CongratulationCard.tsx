@@ -26,7 +26,7 @@ export default function CongratulationCard() {
         You have successfully updated your DW- Arerben account.
       </Text>
 
-      <View style={{ width: "45%", height: 45, marginBottom: 20 }}>
+      <View style={{ width: "45%", height: 50, marginBottom: 20 }}>
         <GradientButton text="Dismiss" onPress={() => alert("Dimissing...")} />
       </View>
     </View>

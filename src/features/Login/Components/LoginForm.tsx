@@ -42,19 +42,19 @@ export default function LoginForm(props: any) {
             Alert.alert("Please fill in the form correctly!")
             return;
         }
-        
+        // navigation.navigate("dashboard");
         try {
             // make the request
-        console.log(formik.values);
+
+        const formData = new FormData();
+
+        formData.append("email", formik.values.email);
+        formData.append("password", formik.values.password);
 
         setLoading(true);
         const request = await fetch(`https://mydwa.herokuapp.com/auth/login/`, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json"
-            },
-         body: JSON.stringify(formik.values)
+         body: formData
         })
 
         const json: any = await request.json();
@@ -62,8 +62,9 @@ export default function LoginForm(props: any) {
         switch(request.status) {
             case 200: {
                 Alert.alert("Login Successful");
+                console.log(json);
                 setLoading(false);
-                userDetails.setUserAtom(json);
+                userDetails.setUserAtom({ first_name: json['first_name'], email: json['email'], last_name: '', id: json['id'], access: json.tokens['access'], refresh: json.tokens['refresh']});
                 navigation.navigate("dashboard");
                 break;
             }
@@ -72,14 +73,19 @@ export default function LoginForm(props: any) {
                 setLoading(false);
                 break;
             }
+
+            case 415: {
+                Alert.alert(json['detail'])
+                setLoading(false);
+                break;
+            }
             default: {
-                console.log(request.status);
-                Alert.alert("An error occured.");
+                Alert.alert(json['detail']);
                 setLoading(false);
             }
         }
         } catch (error) {
-            console.log(error)
+            console.log(error['detail'])
             setLoading(false);
             Alert.alert("Internal Server error");
         }
@@ -95,9 +101,9 @@ export default function LoginForm(props: any) {
 
             <View style={{ flex: 0.8, justifyContent: 'flex-start', marginTop: 50}}>
 
-                <View style={{ width: '100%', height: '25%'}}>
+                <View style={{ width: '100%', height: 50, marginBottom: 5 }}>
                     <Text>Email</Text>
-                    <View style={{ flexDirection: 'row', width: '100%', height: '60%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', width: '100%', height: '100%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="user" size={20} color="#BCBCBC" />
                         <TextInput style={{ flex: 1, marginHorizontal: 10 }} value={formik.values.email} onChangeText={formik.handleChange('email')} onBlur={() => formik.handleBlur('email')} />
                         {formik.touched.email && !formik.errors.email && <Feather name="check" size={20} color={Theme.primaryColor} />}
@@ -107,9 +113,9 @@ export default function LoginForm(props: any) {
                     }
                 </View>
 
-                <View style={{ width: '100%', height: '25%', marginTop: 20}}>
+                <View style={{ width: '100%', height: 50, marginTop: 50,}}>
                     <Text>Password</Text>
-                    <View style={{ flexDirection: 'row', width: '100%', height: '60%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
+                    <View style={{ flexDirection: 'row', width: '100%', height: '100%', backgroundColor: 'white', borderRadius: 10, borderWidth: 2, borderColor: '#BCBCBC', alignItems: 'center', paddingHorizontal: 5, marginTop: 10}}>
                         <Feather name="lock" size={20} color="#BCBCBC" />
                         <TextInput style={{ flex: 1, marginHorizontal: 10 }} secureTextEntry={showPassword} value={formik.values.password} onChangeText={formik.handleChange('password')} onBlur={() => formik.handleBlur('password')} />
                         <Feather name={showPassword ? 'eye':"eye-off"} size={20} color={Theme.primaryColor} onPress={() => setShowPassword(prev => !prev)} />
@@ -119,20 +125,20 @@ export default function LoginForm(props: any) {
                     }
                 </View>
 
-                <Text style={{ marginTop: 20, fontSize: Theme.normalText, fontWeight: '500'}}>Having trouble signing in?</Text>
+                <Text  onPress={() => navigation.navigate('forgotpassword')} style={{ marginTop: 50, fontSize: Theme.normalText, fontWeight: '500'}}>Having trouble signing in?</Text>
 
                 <LinearGradient
                     start={{x: 0.0, y: 0.4}}
                     end={{x: 1, y: 0.0}}
                     colors={['#F46929', '#FFE5D9']}
-                    style={{ width: '100%', height: '12%', borderRadius: 10, marginTop: 20}}
+                    style={{ width: '100%', height: 50, borderRadius: 10, marginTop: 20}}
                 >
                     <TouchableOpacity disabled={loading} style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}
                     onPress={submit}
                     >
                         {loading ? <ActivityIndicator size="large" color="white" />:
                         <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-                            <Feather name="lock" color="white" size={30} />
+                            <Feather name="unlock" color="white" size={30} />
                             <Text style={{ color: 'white', fontSize: Theme.normalText, marginLeft: 10}}>Login</Text>
                         </View>}
                     </TouchableOpacity>

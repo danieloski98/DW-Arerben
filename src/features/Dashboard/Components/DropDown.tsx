@@ -49,9 +49,9 @@ export default function DropDown(props: IProps) {
 
     return (
         <View style={{ width: '100%', height: '100%', overflow: 'visible'}}>
-            <TouchableOpacity onPress={turn} style={{ width: '100%', height: Theme.height/100*6, flexDirection: 'row', alignItems: 'center', paddingHorizontal: Theme.majorSpace, borderWidth: 2, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: 'transparent', justifyContent: 'space-between' }}>
+            <TouchableOpacity onPress={turn} style={{ width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: Theme.majorSpace, borderWidth: 2, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: 'transparent', justifyContent: 'space-between' }}>
                 {props.leftItem}
-                <Text>Sex</Text>
+                <Text></Text>
                 <Animated.View style={animStyle}>
                     <Feather name="chevron-down" size={25} color="lightgrey" />
                 </Animated.View>

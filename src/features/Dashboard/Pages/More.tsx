@@ -19,7 +19,7 @@ export default function More() {
             <View style={{ flex: 0.9, marginBottom: 30 }}>
                 <ScrollView style={{ padding: Theme.majorSpace }} contentContainerStyle={{ paddingBottom: 50}} showsVerticalScrollIndicator={false} >
                     <UpdatePart />
-                    <View style={{ width: '100%', height: 250, backgroundColor: 'white', borderRadius: 10, marginTop: 30, padding: Theme.majorSpace + 10 }}>
+                    <View style={{ width: '100%', backgroundColor: 'white', borderRadius: 10, marginTop: 30, padding: Theme.majorSpace + 10 }}>
                         <InviteCard />
                     </View>
 
