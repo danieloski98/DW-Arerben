@@ -100,7 +100,7 @@ export default function Stage3Form() {
                 <View style={style.dashbox} >
                     <Text style={{ textAlign: 'center'}}>choose from device</Text>
                     {
-                        paymentImage !== "" ? 
+                        paymentImage !== "" ?
                         <View style={{ width: 100, height: 100,  marginVertical: 10  }}>
                             <Feather name="x" style={{ position: 'absolute', zIndex: 1, backgroundColor: 'black', borderRadius: 100, padding: 5, left: 80, elevation: 4, shadowColor: Theme.shadowColor, shadowOffset: {width: 2, height:4}, shadowOpacity: 0.7, shadowRadius: 5 }} size={20} color="white" onPress={() => setPaymentImage("")}  />
                             <Image source={{ uri: paymentImage }} style={{ width: '100%', height: '100%', borderRadius: 10, marginTop: 5 }} resizeMode="cover" />
@@ -120,7 +120,7 @@ export default function Stage3Form() {
                 <View style={style.dashbox} >
                     <Text style={{ textAlign: 'center'}}>choose from device</Text>
                     {
-                        signature !== "" ? 
+                        signature !== "" ?
                         <View style={{ width: 100, height: 100, marginVertical: 10 }}>
                             <Feather name="x" style={{ position: 'absolute', zIndex: 1, backgroundColor: 'black', borderRadius: 20, padding: 5, left: 80, elevation: 4, shadowColor: Theme.shadowColor, shadowOffset: {width: 2, height:4}, shadowOpacity: 0.7, shadowRadius: 5 }} size={20} color="white" onPress={() => setSignature("")}  />
                             <Image source={{ uri: signature }} style={{ width: '100%', height: '100%', borderRadius: 10, marginTop: 5 }} resizeMode="cover" />
@@ -132,7 +132,7 @@ export default function Stage3Form() {
                 </View>
                 <Text style={{ marginTop: 5, fontSize: Theme.normalText - 3 }}>File size must not excess 500kb</Text>
             </View>
-          
+
 
         </View>
     )

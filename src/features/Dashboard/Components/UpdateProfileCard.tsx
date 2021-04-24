@@ -22,7 +22,7 @@ export default function UpdateProfileCard() {
             <Text style={{ marginTop: 10, textAlign: 'center', fontSize: Theme.normalText}}>Complete your profile so you can set yourself up for earning and investing</Text>
 
             <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
-                <View style={{ width: '50%', height: 50 }}>
+                <View style={{ width: '100%', height: 50 }}>
                     <GradientButton text="Update Profile" onPress={() => navigation.navigate("update", {section: 1})} />
                 </View>
             </View>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 // svg icons
 import OrangeDiamond from '../../../../assets/svgs/Orangediamond'
@@ -17,6 +18,9 @@ interface IProps {
 }
 
 export default function PackageCard(props: IProps) {
+
+    const navigation = useNavigation()
+
     const checkType = (type: string) => {
         switch(type) {
             case "Classic": {
@@ -101,7 +105,7 @@ export default function PackageCard(props: IProps) {
             </View>
             <View style={{ width: '100%', height: 50, alignItems: 'center', marginBottom: 20}}>
                 <View style={{ width: '100%', height: 50}}>
-                    <GradientButton text="Choose package" onPress={() => alert(props.type)} />
+                    <GradientButton text="Choose package" onPress={() => navigation.navigate('invest')} />
                 </View>
             </View>
         </View>

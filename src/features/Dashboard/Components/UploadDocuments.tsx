@@ -21,7 +21,7 @@ export default function UploadDocumentsCard() {
             <Text style={{ marginTop: 10, textAlign: 'center', fontSize: Theme.normalText}}>Complete your profile so you can set yourself up for earning and investing</Text>
 
             <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
-                <View style={{ width: '50%', height: 50 }}>
+                <View style={{ width: '100%', height: 50 }}>
                     <GradientButton text="Upload" onPress={() => navigation.navigate("uploaddocument", {section: 2})} />
                 </View>
             </View>

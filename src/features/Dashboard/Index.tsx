@@ -18,6 +18,8 @@ import UploadDocumentPage from './Pages/UploadDocumentPage';
 import ChanePassword from './Pages/ChanePassword';
 import RegisterAgent from './Pages/RegisterAgent';
 import Referrals from './Pages/Referrals';
+import CreateInvestment from './Pages/CreateInvestment';
+import UpdateUserModal from './Components/Home/UpdateUserModal';
 
 
 function Icon(props: {iconName: any, name: string, focused: boolean}) {
@@ -66,6 +68,8 @@ const StackNavigator = () => (
         <Stack.Screen name="changepassword" component={ChanePassword} options={{ headerShown: false }} />
         <Stack.Screen name="registeragent" component={RegisterAgent} options={{ headerShown: false }} />
         <Stack.Screen name="referrals" component={Referrals} options={{ headerShown: false }} />
+        <Stack.Screen name="invest" component={CreateInvestment} options={{ headerShown: false }} />
+        <Stack.Screen name="initialupdate" component={UpdateUserModal} options={{ headerShown: false }} />
     </Stack.Navigator>
 )
 

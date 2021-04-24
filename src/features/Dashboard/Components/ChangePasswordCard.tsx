@@ -21,7 +21,7 @@ export default function ChangePasswordCard() {
             <Text style={{ marginTop: 10, textAlign: 'center', fontSize: Theme.normalText}}>You can change your DWA password Anytime</Text>
 
             <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
-                <View style={{ width: '50%', height: 50 }}>
+                <View style={{ width: '100%', height: 50 }}>
                     <GradientButton text="Change" onPress={() => navigation.navigate("changepassword", {section: 3})} />
                 </View>
             </View>

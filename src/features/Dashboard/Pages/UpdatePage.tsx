@@ -36,10 +36,10 @@ const SwitchForm = (props: {value: number}) => {
 
 export default function UpdatePage(props: { navigation: StackNavigationProp<any>, route: RouteProp<{params: {section: number}}, "params">}) {
 
-    const [index, setIndex] = React.useState(props.route.params.section);
+    //const [index, setIndex] = React.useState(props.route.params.section);
     const [page, setPage] = React.useState(1);
     const headers = ["Personal Information", "Means of Identification", "Next of Kin"];
-    
+
     const setPageIndex = (pageNo: number) => {
         console.log(pageNo);
         setPage(pageNo);
@@ -52,12 +52,12 @@ export default function UpdatePage(props: { navigation: StackNavigationProp<any>
 
                 <View style={{ flex: 1, backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 10, marginBottom: Theme.height/100*31}}>
 
-                   <HeadersScrollView index={index} items={headers} onChange={setPageIndex}/>
+                   <HeadersScrollView index={page} items={headers} onChange={setPageIndex}/>
 
                     <View style={{ width: '100%', height: 'auto', backgroundColor: 'white', padding: Theme.majorSpace, overflow: 'visible', marginBottom: 50 }}>
-                    
+
                            {<SwitchForm value={page} /> as JSX.Element|null }
-                       
+
                     </View>
 
                 </View>

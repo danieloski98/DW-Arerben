@@ -61,7 +61,6 @@ export default function LoginForm(props: any) {
         console.log(request.json);
         switch(request.status) {
             case 200: {
-                Alert.alert("Login Successful");
                 console.log(json);
                 setLoading(false);
                 userDetails.setUserAtom({ first_name: json['first_name'], email: json['email'], last_name: '', id: json['id'], access: json.tokens['access'], refresh: json.tokens['refresh']});
@@ -93,7 +92,7 @@ export default function LoginForm(props: any) {
 
     return (
         <View style={style.parent}>
-            
+
             <View style={style.logoBox}>
                 <Image source={require('../../../../assets/images/logo.png')} resizeMode="contain" style={{ width: '30%', height: '60%'}} />
                 <Text style={style.writeup}>Welcome back to DW-Investment</Text>

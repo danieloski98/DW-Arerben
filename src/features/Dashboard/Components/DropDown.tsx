@@ -1,14 +1,16 @@
 import React from 'react'
-import { View, Text, TextInput } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { Theme } from '../../../theme'
 import Animated, {Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
-import { TouchableOpacity, FlatList, ScrollView } from 'react-native-gesture-handler';
+import { TouchableOpacity as TO, FlatList, ScrollView as SV } from 'react-native-gesture-handler';
+
+function collect(item: any) {}
 
 interface IProps {
-    leftItem?: JSX.Element;
-    rightItem?: JSX.Element;
-    onChange?: Function;
+    lists?: any[];
+    value?: any;
+    onChange?: typeof collect;
 }
 
 export default function DropDown(props: IProps) {
@@ -44,26 +46,33 @@ export default function DropDown(props: IProps) {
             opacity.value = withTiming(1, {duration: 700})
             setOpen(true)
         }
-        
+
     }
 
     return (
         <View style={{ width: '100%', height: '100%', overflow: 'visible'}}>
             <TouchableOpacity onPress={turn} style={{ width: '100%', height: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: Theme.majorSpace, borderWidth: 2, borderColor: 'lightgrey', borderRadius: 10, backgroundColor: 'transparent', justifyContent: 'space-between' }}>
-                {props.leftItem}
-                <Text></Text>
+                <Text>{props.value}</Text>
                 <Animated.View style={animStyle}>
                     <Feather name="chevron-down" size={25} color="lightgrey" />
                 </Animated.View>
             </TouchableOpacity>
             {open && <Animated.View style={{ width: '100%', position: 'absolute',  backgroundColor: 'white', top: Theme.height/100*6, elevation: 5, shadowColor: 'grey', shadowOffset: {width: 2, height: 4}, shadowOpacity: 0.7, shadowRadius: 8 }}>
-                <View style={{ maxHeight: Theme.height/100*30, width: '100%', padding: Theme.majorSpace, overflow: 'scroll' }}>
+                <View style={{ maxHeight: Theme.height/100*30, width: '100%', padding: Theme.majorSpace, overflow: 'scroll', backgroundColor: 'whitesmoke', }}>
                     <ScrollView>
-                        {lists.map((item, index) => (
+                        {
+                          props.lists ?
+                          props.lists.map((item, index) => (
+                            <TO onPress={() => { props.onChange(item); turn();}} key={index} style={{ height: 30, width: '100%', backgroundColor: 'white', marginVertical: 10, justifyContent: 'center', paddingLeft: Theme.majorSpace}}>
+                                <Text>{item}</Text>
+                            </TO>
+                          )) :
+                          lists.map((item, index) => (
                             <TouchableOpacity key={index} style={{ height: 30, width: '100%'}}>
                                 <Text>{item}</Text>
                             </TouchableOpacity>
-                        ))}
+                          ))
+                        }
                     </ScrollView>
                 </View>
 
