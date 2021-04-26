@@ -24,13 +24,18 @@ export default function Home() {
   React.useEffect(() => {
     console.log(user.user);
     (async function() {
-      const request = await fetch(`${URL}/userprofile/${user.user.id}`, {
+      const request = await fetch(`${URL}/userprofile/`, {
         method: 'GET',
         headers: {accept: "application/json", authorization: `Bearer ${user.user.access}`}
       });
       const json = await request.json();
       if (request.status === 404) {
         Alert.alert(`Complete Profile Setup`, 'You have to create your user profile', [{text: 'Update', style: "default", onPress: () => navigation.navigate("initialupdate") }])
+      }
+      if (request.status === 200) {
+        // update the user settings
+        user.setUserAtom({...user.user, ...json.data.results[0]});
+
       }
       // request to check the user
     })()
@@ -46,7 +51,7 @@ export default function Home() {
 
             <View style={style.parent}>
 
-                <UpdateCard />
+                {/* <UpdateCard /> */}
                 <VideoCard />
 
             </View>

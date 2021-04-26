@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 // svg icons
@@ -8,6 +8,11 @@ import BlackDiamond from '../../../../assets/svgs/BlackDiamond'
 import BlueDiamond from '../../../../assets/svgs/BlueDiamond'
 import { Theme } from '../../../theme'
 import GradientButton from '../../../Components/GradientButton'
+import { INvestmentPackage } from '../../../Types/Investmentpackage.type'
+import LocationIdentifier from './Investments/LocationIdentifier'
+import { ILocation } from '../../../Types/Location.type'
+import useUserDetails from '../../../Hooks/useUserDetails'
+import { URL } from '../../../utils/Url'
 
 
 interface IProps {
@@ -17,19 +22,42 @@ interface IProps {
     ROI: Array<any>;
 }
 
-export default function PackageCard(props: IProps) {
+export default function PackageCard(props: {properties: INvestmentPackage, navigate: Function}) {
+  const [locations, setLoactions] = React.useState([] as Array<ILocation>);
+  const [loading, setLoading] = React.useState(true);
+  const user = useUserDetails();
+
+  React.useEffect(() => {
+    (async function() {
+     const result = fetch(`${URL}/userprofile/location/`, {
+       method: 'GET',
+       headers: {
+         authorization: `Bearer ${user.user.access}`
+       }
+     });
+
+     const json = await (await result).json();
+
+     console.log(json);
+
+     setLoactions(json.data.results);
+     setLoading(false);
+    //  console.log(locations);
+
+    })();
+   }, []);
 
     const navigation = useNavigation()
 
     const checkType = (type: string) => {
         switch(type) {
-            case "Classic": {
+            case "Classic (Monthly)": {
                 return <OrangeDiamond />;
             }
-            case "Premium": {
+            case "Premium (Quarterly)": {
                 return <BlueDiamond />;
             }
-            case "Platnium": {
+            case "Platium (Annual)": {
                 return <BlackDiamond />
             }
         }
@@ -37,13 +65,13 @@ export default function PackageCard(props: IProps) {
 
     const typeText = (type: string) => {
         switch(type) {
-            case "Classic": {
+            case "Classic (Monthly)": {
                 return "Classic (Monthly)";
             }
-            case "Premium": {
-                return "Premium (Quaterly)";
+            case "Premium (Quarterly)": {
+                return "Premium (Quarterly)";
             }
-            case "Platnium": {
+            case "Platium (Annual)": {
                 return "Platium (Annual)";
             }
         }
@@ -51,14 +79,17 @@ export default function PackageCard(props: IProps) {
 
     const backColor = (type: string) => {
         switch(type) {
-            case "Classic": {
+            case "Classic (Monthly)": {
                 return "#FFE3D6";
             }
-            case "Premium": {
+            case "Premium (Quarterly)": {
                 return "#A0EBFF";
             }
-            case "Platnium": {
+            case "Platium (Annual)": {
                 return "#E6E6E6";
+            }
+            default: {
+              return 'red';
             }
         }
     }
@@ -74,38 +105,40 @@ export default function PackageCard(props: IProps) {
             case "Platnium": {
                 return "#222222";
             }
+            default: {
+              return 'red';
+            }
         }
     }
     return (
-        <View style={[style.parent, {borderWidth: props.type === "Platnium" ? 2: 0, borderColor: props.type=== "Platnium" ? Theme.primaryColor: 'transparent'}]}>
+        <View style={[style.parent, {borderWidth: props.properties.name === "Platnium" ? 2: 0, borderColor: props.properties.name=== "Platnium (Annual)" ? Theme.primaryColor: 'transparent'}]}>
             <View>
-                {checkType(props.type)}
+                {checkType(props.properties.name)}
             </View>
-            <Text style={{ fontWeight: '400', fontSize: Theme.header }}>{typeText(props.type)}</Text>
-            <View style={{ padding: 3, backgroundColor: backColor(props.type), borderRadius: 20, width: '50%', marginTop: 10}}>
-            <Text style={{ color: textColor(props.type), marginLeft: 10}}>{props.duration}</Text>
+            <Text style={{ fontWeight: '400', fontSize: Theme.header }}>{typeText(props.properties.name)}</Text>
+            <View style={{ padding: 3, backgroundColor: backColor(props.properties.name), borderRadius: 20, width: '50%', marginTop: 10}}>
+            <Text style={{ color: textColor(props.properties.name), marginLeft: 10}}>{typeText(props.properties.name)}</Text>
             </View>
 
             <View style={{ width: '100%', height: 30, backgroundColor: 'transparent', marginTop: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                <Text>Investment PKG</Text>
-                <Text>ROI Profit</Text>
+                <Text style={{ fontSize: Theme.normalText + 3, fontWeight: '700', color: 'grey'}}>Availiable Locations</Text>
             </View>
 
-            <View style={{ width: '100%', backgroundColor: 'whitesmoke', marginTop: 10}}>
+            <View style={{ width: '100%', backgroundColor: 'white', marginTop: 10}}>
 
-                {
-                    props.packages.map((item, index) => (
-                        <View key={index} style={{ width: '100%', height: 30, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: index % 2 === 0 ? 'whitesmoke': 'white' }}>
-                            <Text style={{ fontSize: Theme.normalText, fontWeight: '500'}}>{item}</Text>
-                            <Text>{props.ROI[index]}</Text>
-                        </View>
-                    ))
-                }
+              {
+                loading ?
+                <ActivityIndicator color={Theme.primaryColor} size="small" />
+                :
+                props.properties.location.map((item, index) => (
+                    <LocationIdentifier location={item} locations={locations} key={index} />
+                ))
+              }
 
             </View>
             <View style={{ width: '100%', height: 50, alignItems: 'center', marginBottom: 20}}>
                 <View style={{ width: '100%', height: 50}}>
-                    <GradientButton text="Choose package" onPress={() => navigation.navigate('invest')} />
+                    <GradientButton text="Choose package" onPress={() => props.navigate(props.properties.id)} />
                 </View>
             </View>
         </View>
@@ -122,3 +155,4 @@ const style = StyleSheet.create({
         marginBottom: 20
     }
 })
+

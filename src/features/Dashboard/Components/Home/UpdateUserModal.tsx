@@ -14,6 +14,8 @@ import { UpdateUserController } from '../../Controllers/UpdateUserController';
 import useUserDetails from '../../../../Hooks/useUserDetails';
 import { URL } from '../../../../utils/Url';
 import { useNavigation } from '@react-navigation/core';
+import { ILocation } from '../../../../Types/Location.type';
+import { IBank } from '../../../../Types/Bank.type';
 
 // yup object
 
@@ -42,6 +44,7 @@ const sx = ["Male", "Female"];
 
 
 export default function UpdateUserModal(props: {open: boolean}) {
+  // states
   const [signature, setSignature] = React.useState("");
   const [profilePic, setProfilePic] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -49,7 +52,13 @@ export default function UpdateUserModal(props: {open: boolean}) {
   const [date, setDate] = React.useState(new Date());
   const [identifyPicFile, setIdentityPicFile] = React.useState(null as any);
   const [profilePicfile, setProfilePicFile] = React.useState(null as any);
+  const [locations, setLocation] = React.useState([] as Array<ILocation>);
+  const [banks, setBanks] = React.useState([] as Array<IBank>);
+  const [loc, setLoc] = React.useState("" as string);
+  const [bank, setBank] = React.useState("" as string);
+  const [scrollEnabled, setScrollEnabled] = React.useState(true);
 
+  // hooks
   const user = useUserDetails();
   const navigation = useNavigation();
 
@@ -76,6 +85,28 @@ export default function UpdateUserModal(props: {open: boolean}) {
     validationSchema: ValidationObject,
     onSubmit: () => {null}
   })
+
+  React.useEffect(() => {
+    (async function() {
+      // get banks
+      const results = await fetch(`${URL}/userprofile/bank?page=1`);
+      const results2 = await fetch(`${URL}/userprofile/location?page=1`);
+
+      const banksJson = await results.json();
+      const locationsJson = await results2.json();
+
+      if(results.status === 200) {
+        setBanks(banksJson.data.results);
+      }
+
+      if (results2.status === 200) {
+        setLocation(locationsJson.data.results);
+      }
+
+
+    })()
+  }, []);
+
 
 
 
@@ -133,13 +164,32 @@ export default function UpdateUserModal(props: {open: boolean}) {
     formik.setFieldValue('sex', sx);
   }
 
+  const selectLocation = (sx: string) => {
+    const loc = locations.map((item) => {
+      if(item.name === sx) {
+        formik.setFieldValue('location', item.id);
+        setLoc(item.name)
+        return item;
+      }
+    })
+  }
+
+  const selectBank = (sx: string) => {
+    const loc = banks.map((item) => {
+      if(item.name === sx) {
+        formik.setFieldValue('bank', item.id);
+        setBank(item.name)
+        return item;
+      }
+    })
+  }
+
   const toggle = () => {
     setShow((prev) => !prev)
 }
 
 const setDateISO = (data: Date) => {
   const nd = data.toISOString().split('T')[0];
-  alert(nd);
   formik.setFieldValue('date_of_birth', nd);
   setDate(data);
 }
@@ -163,11 +213,11 @@ const setDateISO = (data: Date) => {
     console.log(formData);
 
     if (profilePic !== '') {
-      formData.append('profile_pic', profilePicfile);
+      formData.append('profile_pic', profilePic);
     }
 
     if (signature !== '') {
-      formData.append('identity_pic', identifyPicFile)
+      formData.append('identity_pic', signature)
     }
     const result = await fetch(`${URL}/userprofile/`, {
       method: 'POST',
@@ -218,20 +268,20 @@ const setDateISO = (data: Date) => {
               {/* form section */}
 
             <Text style={styles.normalText}>Sex</Text>
-            <View style={{ width: '100%', height: 50, zIndex: 1}}>
-            <DropDown  lists={sx} value={formik.values.sex} onChange={selectSx} />
+            <View style={{ width: '100%', height: 50, zIndex: 6}}>
+            <DropDown onScroll={setScrollEnabled}  lists={sx} value={formik.values.sex} onChange={selectSx} />
             </View>
             {
               formik.errors.sex && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.sex}</Text>
             }
 
-            {/* <Text style={styles.normalText}>Location</Text>
-            <View style={{ width: '100%', height: 50}}>
-              <TextBox name="location" value={formik.values.location} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+            <Text style={styles.normalText}>Location</Text>
+            <View style={{ width: '100%', height: 50, zIndex: 4}}>
+            <DropDown onScroll={setScrollEnabled}   lists={locations.map((item) => item.name)} value={loc} onChange={selectLocation} />
             </View>
             {
               formik.errors.location && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.location}</Text>
-            } */}
+            }
 
             <Text style={styles.normalText}>Date of Birth</Text>
             <View style={{ width: '100%', height: 50, zIndex: 2}}>
@@ -250,7 +300,7 @@ const setDateISO = (data: Date) => {
 
             <Text style={styles.normalText}>Marital Status</Text>
             <View style={{ width: '100%', height: 50, zIndex: 3}}>
-              <DropDown  lists={ms} value={formik.values.marital_status} onChange={selectMS} />
+              <DropDown onScroll={setScrollEnabled}   lists={ms} value={formik.values.marital_status} onChange={selectMS} />
             </View>
 
             <Text style={styles.normalText}>Nationality</Text>
@@ -315,8 +365,8 @@ const setDateISO = (data: Date) => {
             }
 
             <Text style={styles.normalText}>Bank Name</Text>
-            <View style={{ width: '100%', height: 50}}>
-              <TextBox name="bank" value={formik.values.bank} onChange={formik.handleChange} />
+            <View style={{ width: '100%', height: 50,zIndex: 5}}>
+            <DropDown onScroll={setScrollEnabled}   lists={banks.map((item) => item.name)} value={bank} onChange={selectBank} />
             </View>
             {
               formik.errors.bank && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.bank}</Text>

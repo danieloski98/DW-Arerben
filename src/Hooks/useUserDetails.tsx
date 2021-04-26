@@ -2,20 +2,12 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import {useRecoilState} from 'recoil'
 import { UserAtom } from '../States/UserState'
-
-export interface IUSer {
-    email: string;
-    first_name: string;
-    last_name: string;
-    id: string;
-    access: string;
-    refresh: string;
-}
+import { IUser } from '../Types/User.type';
 
 export default function useUserDetails() {
     const [user, setUser] = useRecoilState(UserAtom);
 
-    const setUserAtom = (user: IUSer) => {
+    const setUserAtom = (user: IUser) => {
         setUser(user);
     }
     return {

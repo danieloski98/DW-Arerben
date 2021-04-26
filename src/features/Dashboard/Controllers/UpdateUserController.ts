@@ -3,6 +3,10 @@ import { URL } from "../../../utils/Url";
 export class UpdateUserController {
   private URL = URL;
 
+  // static async getLocations(): Promise<{status: number, body: any}> {
+  //   const result = fetch
+  // }
+
   static async initialUpdate(body: FormData, headers: any): Promise<{status: number, body: any}> {
     try {
       console.log(body, headers);

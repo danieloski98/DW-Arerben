@@ -1,16 +1,18 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { Theme } from '../../../theme'
 import Animated, {Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated';
-import { TouchableOpacity as TO, FlatList, ScrollView as SV } from 'react-native-gesture-handler';
+import { TouchableOpacity as TO, FlatList, ScrollView } from 'react-native-gesture-handler';
 
 function collect(item: any) {}
+function scroll(item: boolean) {}
 
 interface IProps {
     lists?: any[];
     value?: any;
     onChange?: typeof collect;
+    onScroll: typeof scroll;
 }
 
 export default function DropDown(props: IProps) {
@@ -59,7 +61,7 @@ export default function DropDown(props: IProps) {
             </TouchableOpacity>
             {open && <Animated.View style={{ width: '100%', position: 'absolute',  backgroundColor: 'white', top: Theme.height/100*6, elevation: 5, shadowColor: 'grey', shadowOffset: {width: 2, height: 4}, shadowOpacity: 0.7, shadowRadius: 8 }}>
                 <View style={{ maxHeight: Theme.height/100*30, width: '100%', padding: Theme.majorSpace, overflow: 'scroll', backgroundColor: 'whitesmoke', }}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={true} >
                         {
                           props.lists ?
                           props.lists.map((item, index) => (
