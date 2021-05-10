@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React from 'react'
-import { View, Text, ActivityIndicator, StyleSheet, RefreshControl } from 'react-native'
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
+import { View, Text, ActivityIndicator, StyleSheet, RefreshControl, ScrollView } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import Animated, {useSharedValue, useAnimatedStyle} from 'react-native-reanimated'
 import GradientButton from '../../../Components/GradientButton'
 import { Feather } from '@expo/vector-icons'
@@ -16,6 +16,8 @@ import { URL } from '../../../utils/Url'
 import CongratulationCard from '../Components/CongratulationCard'
 import InvestmentCards from '../Components/Investments/InvestmentsCardsModal'
 import PackageCard from '../Components/PackageCard'
+import UserInvesmentCard from '../Components/Investments/UserInvesmentCard'
+import { IINvestment } from '../../../Types/Investment'
 
 // interface
 export interface INvestment extends INvestmentPackage {
@@ -26,7 +28,7 @@ export interface INvestment extends INvestmentPackage {
 
 export default function Investments() {
   const [loading, setLoading] = React.useState(true);
-  const [investments, setInvestments] = React.useState([] as Array<INvestment>);
+  const [investments, setInvestments] = React.useState([] as Array<IINvestment>);
   const [showModal, setShowModal] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const user = useUserDetails();
@@ -60,7 +62,7 @@ export default function Investments() {
 
   const onRefresh = async() => {
     setRefreshing(true);
-    // setLoading(true);
+    setLoading(true);
     const result = await fetch(`${URL}/investment/`, {
       method: 'GET',
       headers: {
@@ -71,12 +73,8 @@ export default function Investments() {
     const json = await result.json();
     console.log(json);
     setInvestments(json.data.results);
-    // setLoading(false);
-    const timer = setTimeout(() => {
-      setRefreshing(false);
-      clearTimeout(timer);
-    }, 3000)
-
+    setLoading(false);
+    setRefreshing(false);
   };
 
     return (
@@ -105,10 +103,17 @@ export default function Investments() {
                 :
                 <View>
                   <View style={{ width: '100%', height: 50, alignItems: 'flex-end'}}>
-                    <TouchableOpacity onPress={() => setShowModal(true)} style={{ width: 50, height: 50, borderRadius: 30, backgroundColor: Theme.primaryColor, justifyContent: 'center', alignItems: 'center', position: 'absolute', right: 10, top: Theme.height /100*61 }}>
+                    <TouchableOpacity onPress={() => setShowModal(true)} style={{ width: 50, height: 50, borderRadius: 30, backgroundColor: Theme.primaryColor, justifyContent: 'center', alignItems: 'center', }}>
                         <Feather name="plus" size={30} color="white" />
                     </TouchableOpacity>
                   </View>
+                 <View style={{ marginTop: 20 }}>
+                 {
+                    investments.map((item, index) => (
+                      <UserInvesmentCard key={index} {...item} />
+                    ))
+                  }
+                 </View>
                 </View>
             }
             </View>
