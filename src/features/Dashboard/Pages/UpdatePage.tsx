@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native';
+import { View, Text, Platform, StyleSheet, Image } from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack'
 import { RouteProp, useNavigation } from '@react-navigation/native'
 import CustomizableTabber from '../../../Components/CustomizableTabbar';
@@ -10,59 +10,517 @@ import TextBox from '../Components/TextBox';
 import UpdateProfileForm from '../Components/UpdateProfile/UpdateProfileForm';
 import MeansOfIdentification from '../Components/MeansOfIdentification/MeansOfIdentification';
 import NextOfKin from '../Components/NextOfKin/NextofKin';
+import * as yup from 'yup';
+import {useFormik} from 'formik';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Feather } from '@expo/vector-icons'
+import * as imagepicker from 'expo-image-picker'
+import useUserDetails from '../../../Hooks/useUserDetails';
+import { IBank } from '../../../Types/Bank.type';
+import { ILocation } from '../../../Types/Location.type';
+import DropDown from '../Components/DropDown';
+import { URL } from '../../../utils/Url';
+import GradientButton from '../../../Components/GradientButton';
 
-export const CancelButton = () => {
-    const navigation = useNavigation();
-    return (
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{ width: Theme.width / 100 * 30, height: '50%', borderWidth: 2, borderColor: 'grey', justifyContent: 'center', alignItems: 'center', borderRadius: 10}}>
-            <Text>Cancel</Text>
-        </TouchableOpacity>
-    )
+
+// yup object
+
+const ValidationObject = yup.object({
+  location: yup.string(),
+  sex: yup.string(),
+  date_of_birth: yup.string(),
+  marital_status: yup.string(),
+  nationality: yup.string(),
+  state_of_origin: yup.string(),
+  contact_address: yup.string(),
+  contact_state: yup.string(),
+  contact_city: yup.string(),
+  occupation: yup.string(),
+  source_of_income: yup.string(),
+  office_address: yup.string(),
+  bank: yup.string(),
+  account_number: yup.string(),
+  agent: yup.number(),
+});
+
+const ms = ["Single", "Married", "Divorced"];
+const sx = ["Male", "Female"];
+
+
+export default function UpdatePage(props: any) {
+
+      // states
+  const [signature, setSignature] = React.useState("");
+  const [profilePic, setProfilePic] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [show, setShow] = React.useState(false);
+  const [date, setDate] = React.useState(new Date());
+  const [identifyPicFile, setIdentityPicFile] = React.useState(null as any);
+  const [profilePicfile, setProfilePicFile] = React.useState(null as any);
+  const [locations, setLocation] = React.useState([] as Array<ILocation>);
+  const [banks, setBanks] = React.useState([] as Array<IBank>);
+  const [loc, setLoc] = React.useState("" as string);
+  const [bank, setBank] = React.useState("" as string);
+  const [scrollEnabled, setScrollEnabled] = React.useState(true);
+
+  // hooks
+  const user = useUserDetails();
+  const navigation = useNavigation();
+
+  // formik
+  const formik = useFormik({
+    initialValues: {
+      location: user.user.id,
+      sex: user.user.sex,
+      date_of_birth: user.user.date_of_birth,
+      marital_status: user.user.marital_status,
+      nationality: user.user.nationality,
+      state_of_origin: '',
+      contact_address: user.user.contact_address,
+      contact_state: user.user.contact_state,
+      contact_city: user.user.contact_city,
+      occupation: user.user.occupation,
+      source_of_income: user.user.source_of_income,
+      office: user.user.office,
+      office_address: user.user.office,
+      bank: user.user.bank,
+      account_number: user.user.account_number,
+      agent: user.user.agent,
+    },
+    validationSchema: ValidationObject,
+    onSubmit: () => {null}
+  })
+
+  React.useEffect(() => {
+    (async function() {
+      // get banks
+      const results = await fetch(`${URL}/userprofile/bank?page=1`);
+      const results2 = await fetch(`${URL}/userprofile/location?page=1`);
+
+      const banksJson = await results.json();
+      const locationsJson = await results2.json();
+
+      if(results.status === 200) {
+        setBanks(banksJson.data.results);
+      }
+
+      if (results2.status === 200) {
+        setLocation(locationsJson.data.results);
+      }
+
+
+    })()
+  }, []);
+
+
+
+
+  const pickSignature = async() => {
+      const {status} = await imagepicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+          alert("You have to grant permission");
+          // return;
+      }
+
+      // pick the image
+      const result = await imagepicker.launchImageLibraryAsync({
+          mediaTypes: imagepicker.MediaTypeOptions.Images,
+          quality: 1,
+          allowsEditing: true,
+          aspect: [4,4]
+      })
+
+      console.log(result);
+
+      if(!result.cancelled) {
+          setSignature(result.uri);
+          setIdentityPicFile(result);
+      }
+    }
+
+    const pickProfilePic = async() => {
+      const {status} = await imagepicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+          alert("You have to grant permission");
+          // return;
+      }
+
+      // pick the image
+      const result = await imagepicker.launchImageLibraryAsync({
+          mediaTypes: imagepicker.MediaTypeOptions.Images,
+          quality: 1,
+          allowsEditing: true,
+          aspect: [4,4]
+      })
+
+      console.log(result);
+      setProfilePicFile(result);
+
+      if(!result.cancelled) {
+          setProfilePic(result.uri);
+      }
+  }
+
+  const selectMS = (ms: any) => {
+    formik.setFieldValue('marital_status', ms);
+  }
+
+  const selectSx = (sx: string) => {
+    formik.setFieldValue('sex', sx);
+  }
+
+  const selectLocation = (sx: string) => {
+    const loc = locations.map((item) => {
+      if(item.name === sx) {
+        formik.setFieldValue('location', item.id);
+        setLoc(item.name)
+        return item;
+      }
+    })
+  }
+
+  const selectBank = (sx: string) => {
+    const loc = banks.map((item) => {
+      if(item.name === sx) {
+        formik.setFieldValue('bank', item.id);
+        setBank(item.name)
+        return item;
+      }
+    })
+  }
+
+  const toggle = () => {
+    setShow((prev) => !prev)
 }
 
-const SwitchForm = (props: {value: number}) => {
-    switch(props.value) {
-        case 0: {
-            return <UpdateProfileForm /> as JSX.Element|null
-        }
-        case 1: {
-            return <MeansOfIdentification /> as JSX.Element|null
-        }
-        case 2: {
-            return <NextOfKin /> as JSX.Element|null
-        }
-    }
+const setDateISO = (data: Date) => {
+  const nd = data.toISOString().split('T')[0];
+  formik.setFieldValue('date_of_birth', nd);
+  setDate(data);
 }
 
-export default function UpdatePage(props: { navigation: StackNavigationProp<any>, route: RouteProp<{params: {section: number}}, "params">}) {
+const makeRequest = async() => {
+  setLoading(true);
+ if (!formik.isValid) {
+    setLoading(false);
+    alert('Please fill in the form correctly');
+  }else {
 
-    //const [index, setIndex] = React.useState(props.route.params.section);
-    const [page, setPage] = React.useState(1);
-    const headers = ["Personal Information", "Means of Identification", "Next of Kin"];
+        // arrange formData
+  const formData = new FormData();
+  for (const pro in formik.values) {
+    formData.append(pro, formik.values[pro]);
+  }
 
-    const setPageIndex = (pageNo: number) => {
-        console.log(pageNo);
-        setPage(pageNo);
+  console.log(formData);
+
+  if (profilePic !== '') {
+    const res = await fetch(profilePic);
+    const blob = await res.blob();
+    formData.append('profile_pic', blob);
+  }
+
+  if (signature !== '') {
+    const res = await fetch(signature);
+    const blob = await res.blob();
+    formData.append('identity_pic', blob)
+  }
+  try {
+    const result = await fetch(`${URL}/userprofile/${user.user.id}`, {
+      method: 'PUT',
+      headers: {
+        authorization: `Bearer ${user.user.access}`,
+      },
+      body: formData,
+    })
+    // const result = await UpdateUserController.initialUpdate(formData, {authorization: `Bearer ${user.user.access}`})
+
+    const json = await result.json();
+
+    console.log(json);
+    if (result.status === 200) {
+      setLoading(false);
+      alert('Update Successful');
+
+      user.setUserAtom({...json.data});
+      console.log(user.user);
+      navigation.goBack();
+    }else {
+      setLoading(false);
+      alert('An error occured, please try again');
     }
+
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+    setLoading(false);
+    alert('An error occured');
+  }
+
+  }
+
+
+}
 
     return (
         <View style={{ flex: 1 }}>
-            <CustomizableTabber name="Update Profile" rightItem={<CancelButton />} />
-            <ScrollView style={{ flex: 1, paddingTop: 30, paddingHorizontal: Theme.majorSpace, }} showsVerticalScrollIndicator={false} scrollEventThrottle={0}>
+            <CustomizableTabber name="Update Profile" />
 
-                <View style={{ flex: 1, backgroundColor: 'white', width: '100%', height: '100%', borderRadius: 10, marginBottom: Theme.height/100*31}}>
+            <View style={{ width: '90%', height: Theme.height/100*75, margin: 20, backgroundColor: 'white', borderRadius: 10}}>
+            <ScrollView contentContainerStyle={{ padding: 20}} showsVerticalScrollIndicator={false}>
 
-                   <HeadersScrollView index={page} items={headers} onChange={setPageIndex}/>
+             <View style={styles.logoBox}>
+              {
+                profilePic === "" ?
+                <TouchableOpacity onPress={pickProfilePic} style={styles.imgPlaceHolder}>
+                <Feather name="camera" size={30} color={Theme.primaryColor} />
+                </TouchableOpacity>
+              :
+              <TouchableOpacity style={styles.profilePicContainer}>
+                <Feather name="x" style={styles.xIcon2} size={20} color="white" onPress={() => setProfilePic("")}  />
+                <Image source={{ uri: profilePic }} style={{ width: 100, height: 100, borderRadius: 100, }} resizeMode="cover" />
+              </TouchableOpacity>
+              }
+            </View>
 
-                    <View style={{ width: '100%', height: 'auto', backgroundColor: 'white', padding: Theme.majorSpace, overflow: 'visible', marginBottom: 50 }}>
+            <Text style={styles.normalText}>Sex</Text>
+            <View style={{ width: '100%', height: 50, zIndex: 6}}>
+            <DropDown onScroll={setScrollEnabled}  lists={sx} value={formik.values.sex} onChange={selectSx} />
+            </View>
+            {
+              formik.errors.sex && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.sex}</Text>
+            }
 
-                           {<SwitchForm value={page} /> as JSX.Element|null }
+            <Text style={styles.normalText}>Location</Text>
+            <View style={{ width: '100%', height: 50, zIndex: 4}}>
+              <DropDown onScroll={() => null}   lists={locations.map((item) => item.name)} value={loc} onChange={selectLocation} />
+            </View>
+            {
+              formik.errors.location && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.location}</Text>
+            }
 
-                    </View>
+            <Text style={styles.normalText}>Date of Birth</Text>
+            <View style={{ width: '100%', height: 50, zIndex: 2}}>
+            <TouchableOpacity style={{ width: '100%', height:Theme.height/100*6, borderColor: 'lightgrey', borderWidth: 2, borderRadius: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: Theme.majorSpace, marginBottom: 20 }} onPress={toggle}>
+                <Text>{date.toLocaleDateString()}</Text>
+                <Feather name="calendar" size={25} color={Theme.primaryColor} />
+            </TouchableOpacity>
 
+            {
+                show && <DateTimePicker mode="date" date={new Date("yyyy-mm-dd")} value={date} display={Platform.OS === 'ios' ? "inline":"default"} onChange={(e, date) => {setDateISO(date as Date); setShow(false)}} style={{ zIndex: 4, backgroundColor: 'white'}} />
+            }
+            </View>
+            {
+              formik.errors.date_of_birth && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.date_of_birth}</Text>
+            }
+
+            <Text style={styles.normalText}>Marital Status</Text>
+            <View style={{ width: '100%', height: 50, zIndex: 3}}>
+              <DropDown onScroll={setScrollEnabled}   lists={ms} value={formik.values.marital_status} onChange={selectMS} />
+            </View>
+
+            <Text style={styles.normalText}>Nationality</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="nationality" value={formik.values.nationality} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.nationality && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.nationality}</Text>
+            }
+
+            <Text style={styles.normalText}>State of Origin</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="state_of_origin" value={formik.values.state_of_origin} onChange={formik.handleChange}/>
+            </View>
+            {
+              formik.errors.state_of_origin && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.state_of_origin}</Text>
+            }
+
+            <Text style={styles.normalText}>Contact Address</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="contact_address" value={formik.values.contact_address} onChange={formik.handleChange} />
+            </View>
+
+            <Text style={styles.normalText}>Contact State</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="contact_state" value={formik.values.contact_state} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.contact_state && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.contact_state}</Text>
+            }
+
+            <Text style={styles.normalText}>Contact City</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="contact_city" value={formik.values.contact_city} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.contact_city && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.contact_city}</Text>
+            }
+
+            <Text style={styles.normalText}>Occupation</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="occupation" value={formik.values.occupation} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.occupation && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.occupation}</Text>
+            }
+
+            <Text style={styles.normalText}>Source of Income</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="source_of_income" value={formik.values.source_of_income} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.source_of_income && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.source_of_income}</Text>
+            }
+
+            <Text style={styles.normalText}>Office Address</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="office_address" value={formik.values.office_address} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.office_address && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.office_address}</Text>
+            }
+
+            <Text style={styles.normalText}>Bank Name</Text>
+            <View style={{ width: '100%', height: 50,zIndex: 5}}>
+            <DropDown onScroll={setScrollEnabled}   lists={banks.map((item) => item.name)} value={bank} onChange={selectBank} />
+            </View>
+            {
+              formik.errors.bank && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.bank}</Text>
+            }
+
+            {/* <Text style={styles.normalText}>Acoount Name</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="account_name" value={formik.values.account_name} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.account_name && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.account_name}</Text>
+            } */}
+
+
+            <Text style={styles.normalText}>Acoount Number</Text>
+            <View style={{ width: '100%', height: 50}}>
+              <TextBox name="account_number" value={formik.values.account_number} onChange={formik.handleChange} />
+            </View>
+            {
+              formik.errors.account_number && <Text style={{ fontSize: 10, color: 'red', marginTop: 5 }}>{formik.errors.account_number}</Text>
+            }
+
+            <View style={{ marginBottom: 20, marginTop: 20 }}>
+                <Text style={{ fontSize: Theme.normalText, fontWeight: '700',}}>Attach Identity Image</Text>
+                <Text style={{ marginTop: 5, fontSize: Theme.normalText, color: 'grey' }}>Please attach either your NIN, Drivers License or International Passport</Text>
+
+                <View style={styles.dashbox} >
+                    <Text style={{ textAlign: 'center'}}>choose from device</Text>
+                    {
+                        signature !== "" ?
+                        <View style={{ width: 100, height: 100, marginVertical: 10 }}>
+                            <Feather name="x" style={styles.xIcon} size={20} color="white" onPress={() => setSignature("")}  />
+                            <Image source={{ uri: signature }} style={{ width: '100%', height: '100%', borderRadius: 10, marginTop: 5 }} resizeMode="cover" />
+                        </View>: null
+                    }
+                    <TouchableOpacity onPress={pickSignature} style={{ width: '40%', padding: Theme.majorSpace, backgroundColor: '#F5F5F5', alignItems: 'center', justifyContent: 'center', borderRadius: 10, marginTop: 10 }}>
+                        <Text style={{ fontSize: Theme.normalText - 3, color: 'grey' }}>Choose Image</Text>
+                    </TouchableOpacity>
                 </View>
+                <Text style={{ marginTop: 5, fontSize: Theme.normalText - 3 }}>File size must not excess 500kb</Text>
+            </View>
 
-            </ScrollView>
+            <View style={{ width: '100%', height: 50, marginBottom: 20}}>
+              <GradientButton text="Submit" onPress={makeRequest} loading={loading} />
+            </View>
+
+              </ScrollView>
+            </View>
+
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+  parent: {
+    flex: 1,
+    paddingTop: Platform.OS === 'ios'? 40:0,
+    padding: Theme.majorSpace,
+    backgroundColor: 'white',
+    justifyContent: 'center'
+  },
+  container: {
+    width: '100%',
+    minHeight: Theme.height/100*90,
+    maxHeight: Theme.height/100*70,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: Theme.majorSpace
+  },
+  logoBox: {
+    width: '100%',
+    height: 100,
+    alignItems: 'center',
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  imgPlaceHolder: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    backgroundColor: 'lightgrey',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  msgText: {
+    fontSize:Theme.normalText,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginTop: 20
+  },
+  normalText: {
+    fontSize: Theme.normalText,
+    color: 'grey',
+    marginTop: 20,
+    marginBottom: 5
+  },
+  dashbox: {
+    width: '100%',
+    borderRadius: 10,
+    borderWidth: 2,
+    borderStyle: "dashed",
+    borderColor: Theme.shadowColor,
+    marginTop: 20,
+    padding: 20,
+    alignItems: 'center'
+},
+xIcon: {
+  position: 'absolute',
+  zIndex: 1,
+  backgroundColor: 'black',
+  borderRadius: 20,
+  padding: 5,
+  left: 80,
+  elevation: 4,
+  shadowColor: Theme.shadowColor,
+  shadowOffset: {width: 2, height:4},
+  shadowOpacity: 0.7,
+  shadowRadius: 5
+},
+xIcon2: {
+  position: 'absolute',
+  zIndex: 1,
+  backgroundColor: 'black',
+  borderRadius: 20,
+  padding: 5,
+  left: 100,
+  elevation: 4,
+  shadowColor: Theme.shadowColor,
+  shadowOffset: {width: 2, height:4},
+  shadowOpacity: 0.7,
+  shadowRadius: 5
+},
+profilePicContainer: {
+  width: 150,
+  height: 100,
+  borderRadius: 100,
+  alignItems: 'center'
+}
+});
+

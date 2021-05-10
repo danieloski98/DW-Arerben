@@ -15,7 +15,7 @@ export interface IUser {
   contact_city: string;
   occupation: string;
   source_of_income: string;
-  office: string;
+  office_address: string;
   bank: number;
   account_number: string;
   profile_pic: any;

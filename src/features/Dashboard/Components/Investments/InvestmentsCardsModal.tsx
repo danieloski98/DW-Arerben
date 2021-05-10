@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, ActivityIndicator, Modal, TouchableOpacity } from 'react-native'
+import { View, Text, ActivityIndicator, Modal, TouchableOpacity, Platform, StyleSheet } from 'react-native'
 import Animated, {useSharedValue, useAnimatedStyle} from 'react-native-reanimated'
 import { Feather } from '@expo/vector-icons'
 
@@ -37,24 +37,56 @@ export default function InvestmentCards(props: {open: boolean, navigate: Functio
 
     return (
        <Modal visible={props.open} animationType="slide">
-         <View style={{ width: '100%', height: 50, paddingHorizontal: 20, alignItems: 'flex-end', justifyContent: 'center'}}>
-           <TouchableOpacity onPress={() => props.close()} style={{ width: 25, height: 25, borderRadius: 15, backgroundColor: Theme.primaryColor, justifyContent: 'center', alignItems: 'center'}}>
+         <View style={style.topbar}>
+           <TouchableOpacity onPress={() => props.close()} style={style.closeBtn}>
              <Feather name="x" size={15} color="white" />
            </TouchableOpacity>
          </View>
          <Animated.ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingTop: 0}}>
           {
             loading ?
-            <View style={{ width: '100%', height: Theme.height/100* 60, justifyContent: 'center', alignItems: 'center'}}>
+            <View style={style.loadingView}>
               <ActivityIndicator color={Theme.primaryColor} size="large" />
             </View>
             :
-            <View style={{ flex: 1, paddingHorizontal: 20, paddingTop: 20, marginBottom: 20}}>
+            <View style={style.packagesView}>
             {/* <CongratulationCard /> */}
             {packages.map((item,index) => <PackageCard properties={item} navigate={props.navigate} key={index} />)}
-       </View>
+            </View>
           }
        </Animated.ScrollView>
        </Modal>
     )
 }
+
+
+const style = StyleSheet.create({
+  topbar: {
+    width: '100%',
+    height: 50,
+    paddingHorizontal: 20,
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginTop: Platform.OS === 'ios' ? 50:0
+  },
+  closeBtn: {
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+    backgroundColor: Theme.primaryColor,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loadingView: {
+    width: '100%',
+    height: Theme.height/100* 60,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  packagesView: {
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    marginBottom: 20
+  }
+});

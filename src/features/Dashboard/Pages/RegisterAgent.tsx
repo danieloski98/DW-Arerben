@@ -9,6 +9,9 @@ import * as imagepicker from 'expo-image-picker'
 import TextBox from '../Components/TextBox'
 import * as yup from 'yup';
 import { useFormik } from 'formik'
+import useUserDetails from '../../../Hooks/useUserDetails'
+import { useNavigation } from '@react-navigation/core'
+import { URL } from '../../../utils/Url'
 
 const val = yup.object({
   guarantor_name: yup.string().required('This field is required'),
@@ -20,6 +23,12 @@ const val = yup.object({
 
 export default function RegisterAgent() {
   const [signature, setSignature] = React.useState("");
+  const [proof, setProof] = React.useState("");
+  const [file, setFile] = React.useState({} as any);
+  const [loading, setLoading] = React.useState(false);
+
+  const user = useUserDetails();
+  const navigation = useNavigation();
 
     const formik = useFormik({
       initialValues: {guarantor_name: '', guarantor_occupation: '', guarantor_email: '', guarantor_phone: '', guarantor_address: ''},
@@ -48,6 +57,88 @@ export default function RegisterAgent() {
       if(!result.cancelled) {
           setSignature(result.uri);
       }
+    }
+
+    const pickProof = async() => {
+      const {status} = await imagepicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+          alert("You have to grant permission");
+          // return;
+      }
+
+      // pick the image
+      const result = await imagepicker.launchImageLibraryAsync({
+          mediaTypes: imagepicker.MediaTypeOptions.Images,
+          quality: 1,
+          allowsEditing: true,
+          aspect: [4,4]
+      })
+
+      console.log(result);
+
+      if(!result.cancelled) {
+          setProof(result.uri);
+          setFile(result);
+      }
+    }
+
+    const makeRequest = async() => {
+      setLoading(true);
+      if (!formik.dirty) {
+        setLoading(false);
+        alert('please filling the form to continue');
+      }else if (!formik.isValid) {
+        setLoading(false);
+        alert('Please fill in the form correctly');
+      }else if(proof === "") {
+        setLoading(false);
+        alert('You have to upload your proof of payment');
+      }
+      // else if (signature === "") {
+      //   setLoading(false);
+      //   alert("You have to pick the required doc")
+      // }
+      else {
+
+            // arrange formData
+      const formData = new FormData();
+      for (const pro in formik.values) {
+        formData.append(pro, formik.values[pro]);
+      }
+
+
+      const fet = await fetch(proof);
+      const blob = await fet.blob();
+      formData.append('proof_payment', file);
+
+      //
+
+      const result = await fetch(`${URL}/userprofile/agent/`, {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${user.user.access}`,
+        },
+        body: formData,
+      })
+      // const result = await UpdateUserController.initialUpdate(formData, {authorization: `Bearer ${user.user.access}`})
+
+      const json = await result.json();
+
+      console.log(json);
+      if (result.status === 200) {
+        setLoading(false);
+        alert('Agent created');
+        // navigation.navigate('dashboard')
+      }else {
+        setLoading(false);
+        alert('An error occured, please try again');
+      }
+
+      setLoading(false);
+
+      }
+
+
     }
 
     return (
@@ -103,13 +194,13 @@ export default function RegisterAgent() {
                 <View style={styles.dashbox} >
                     <Text style={{ textAlign: 'center'}}>choose from device</Text>
                     {
-                        signature !== "" ?
+                        proof !== "" ?
                         <View style={{ width: 100, height: 100, marginVertical: 10 }}>
-                            <Feather name="x" style={styles.xIcon} size={20} color="white" onPress={() => setSignature("")}  />
-                            <Image source={{ uri: signature }} style={{ width: '100%', height: '100%', borderRadius: 10, marginTop: 5 }} resizeMode="cover" />
+                            <Feather name="x" style={styles.xIcon} size={20} color="white" onPress={() => setProof("")}  />
+                            <Image source={{ uri: proof }} style={{ width: '100%', height: '100%', borderRadius: 10, marginTop: 5 }} resizeMode="cover" />
                         </View>: null
                     }
-                    <TouchableOpacity onPress={pickSignature} style={{ width: '40%', padding: Theme.majorSpace, backgroundColor: '#F5F5F5', alignItems: 'center', justifyContent: 'center', borderRadius: 10, marginTop: 10 }}>
+                    <TouchableOpacity onPress={pickProof} style={{ width: '40%', padding: Theme.majorSpace, backgroundColor: '#F5F5F5', alignItems: 'center', justifyContent: 'center', borderRadius: 10, marginTop: 10 }}>
                         <Text style={{ fontSize: Theme.normalText - 3, color: 'grey' }}>Choose Image</Text>
                     </TouchableOpacity>
                 </View>
@@ -120,7 +211,7 @@ export default function RegisterAgent() {
                 <Text style={{ fontSize: Theme.normalText, fontWeight: '700',}}>Attach Identity Image</Text>
                 <Text style={{ marginTop: 5, fontSize: Theme.normalText, color: 'grey' }}>Please attach either your NIN, Drivers License or International Passport</Text>
 
-                <View style={styles.dashbox} >
+                {/* <View style={styles.dashbox} >
                     <Text style={{ textAlign: 'center'}}>choose from device</Text>
                     {
                         signature !== "" ?
@@ -132,12 +223,12 @@ export default function RegisterAgent() {
                     <TouchableOpacity onPress={pickSignature} style={{ width: '40%', padding: Theme.majorSpace, backgroundColor: '#F5F5F5', alignItems: 'center', justifyContent: 'center', borderRadius: 10, marginTop: 10 }}>
                         <Text style={{ fontSize: Theme.normalText - 3, color: 'grey' }}>Choose Image</Text>
                     </TouchableOpacity>
-                </View>
+                </View> */}
                 <Text style={{ marginTop: 5, fontSize: Theme.normalText - 3 }}>File size must not excess 500kb</Text>
                 </View>
 
                 <View style={{ height: 50, marginBottom: 30 }}>
-                <GradientButton text="Create Agent" onPress={() => alert('Creating agent...')} />
+                <GradientButton text="Create Agent" onPress={makeRequest} loading={loading} />
                 </View>
              </ScrollView>
            </View>

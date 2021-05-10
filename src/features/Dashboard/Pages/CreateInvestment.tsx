@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/core'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import useUserDetails from '../../../Hooks/useUserDetails'
 import { URL } from '../../../utils/Url'
+import * as DocumentPicker from 'expo-document-picker';
 
 // yup
 const validationObject = yup.object({
@@ -47,37 +48,50 @@ export default function CreateInvestment(props: any) {
     }, [formik.values.invest_pack])
 
     const pickProof = async() => {
+
         const {status} = await imagepicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
             alert("You have to grant permission");
             // return;
         }
 
-        // pick the image
-        const result = await imagepicker.launchImageLibraryAsync({
-            mediaTypes: imagepicker.MediaTypeOptions.Images,
-            quality: 1,
-            allowsEditing: true,
-            aspect: [4,4]
+        const res = await DocumentPicker.getDocumentAsync({
+          type: 'image/*',
+          copyToCacheDirectory: true,
         })
+
+        if (res.type === 'success') {
+          console.log(res);
+          setUploadFile(res);
+          setProof(res.uri);
+        }
+
+        // pick the image
+        // const result = await imagepicker.launchImageLibraryAsync({
+        //     mediaTypes: imagepicker.MediaTypeOptions.Images,
+        //     quality: 1,
+        //     allowsEditing: true,
+        //     aspect: [4,4],
+        //     base64: false,
+        // })
 
         // console.log(result);
 
-        if(!result.cancelled) {
-          // object
-          const file = {
-            uri: result.uri,
-            name: '',
-            type: '',
-          }
-          // create file
-          const fet = await fetch(result.uri);
-          const blob = await fet.blob();
-          console.log(JSON.stringify(blob));
-          setUploadFile(blob);
+        // if(!result.cancelled) {
+        //   // object
+        //   const file = {
+        //     uri: result.uri,
+        //     name: '',
+        //     type: '',
+        //   }
+        //   // create file
+        //   const fet = await fetch(result.uri);
+        //   const blob = await fet.blob();
 
-          setProof(result.uri);
-        }
+        //   setUploadFile(blob);
+
+        //   setProof(result.uri);
+        // }
 
     }
 
@@ -107,16 +121,22 @@ export default function CreateInvestment(props: any) {
       formData.append(pro, formik.values[pro]);
     }
 
-    // if (proof !== '') {
-    //   formData.append('proof_payment', uploadFile)
-    // }
+    if (proof !== undefined) {
+      formData.append('proof_payment', {
+        name: uploadFile['name'],
+        uri: proof,
+        type: 'image/jpg'
+      });
+      console.log(JSON.stringify(uploadFile));
+    }
 
     try {
-      const result = await fetch(`${URL}/investment`, {
+
+      const result = await fetch(`${URL}/investment/`, {
         method: 'POST',
         headers: {
           authorization: `Bearer ${user.user.access}`,
-          accept: 'application/json',
+          'Content-Type': 'multipart/form-data; ',
         },
         body: formData,
       })

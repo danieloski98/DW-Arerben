@@ -14,7 +14,7 @@ export default function Account() {
            <Tabbar />
            <View style={{ width: '100%', paddingHorizontal: 20, paddingTop: 20, paddingBottom: 20}}>
                <UpdateProfileCard />
-               <UploadDocumentsCard />
+               {/* <UploadDocumentsCard /> */}
                <ChangePasswordCard />
            </View>
        </Animated.ScrollView>
