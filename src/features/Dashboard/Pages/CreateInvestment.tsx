@@ -7,6 +7,7 @@ import { Theme } from '../../../theme'
 import DropDown from '../Components/DropDown'
 import TextBox from '../Components/TextBox'
 import * as imagepicker from 'expo-image-picker'
+import * as DocumentPicker from 'expo-document-picker'
 import { Feather } from '@expo/vector-icons'
 import * as yup from 'yup';
 import { useFormik } from 'formik';
@@ -14,7 +15,8 @@ import { useNavigation } from '@react-navigation/core'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import useUserDetails from '../../../Hooks/useUserDetails'
 import { URL } from '../../../utils/Url'
-import * as DocumentPicker from 'expo-document-picker';
+import SuccessModal from '../Components/Investments/SuccessModal';
+import FailedModal from '../Components/Investments/FailedModal'
 
 // yup
 const validationObject = yup.object({
@@ -29,6 +31,8 @@ export default function CreateInvestment(props: any) {
     const [loading, setLoading] = React.useState(false);
     const [date, setDate] = React.useState(new Date());
     const [uploadFile, setUploadFile] = React.useState({} as any);
+    const [showSuccess, setShowSuccess] = React.useState(false);
+    const [showFailure, setShowFailure] = React.useState(true);
     const navigation = useNavigation();
     const user = useUserDetails();
 
@@ -56,7 +60,7 @@ export default function CreateInvestment(props: any) {
         }
 
         const res = await DocumentPicker.getDocumentAsync({
-          type: 'image/*',
+          type: 'image/jpeg',
           copyToCacheDirectory: true,
         })
 
@@ -95,7 +99,7 @@ export default function CreateInvestment(props: any) {
 
     }
 
-    const toggle = () => {
+  const toggle = () => {
       setShow((prev) => !prev)
   }
 
@@ -144,13 +148,13 @@ export default function CreateInvestment(props: any) {
 
       const json = await result.json();
 
-      if (result.status === 200) {
+      if (result.status === 201) {
         // navigation.navigate('dashboard');
-        alert('Investment created');
+        setShowSuccess(true);
       }else {
         console.log(json);
         console.log(result.status);
-        alert('An error occured, please try again');
+        setShowFailure(true);
       }
 
       setLoading(false);
@@ -165,9 +169,22 @@ export default function CreateInvestment(props: any) {
 
   }
 
+  const closeSuccess = () => {
+    setShowSuccess(false);
+    navigation.navigate('Investments');
+  }
+
+  const closeFailure = () => {
+    setShowFailure(false);
+  }
+
   return (
         <View style={{ flex: 1}}>
+
             <CustomizableTabber name="Create Investment" />
+
+            <SuccessModal visible={showSuccess} close={closeSuccess} />
+            <FailedModal visible={showFailure} close={closeFailure} />
 
             <ScrollView style={{ flex: 1, backgroundColor: 'transparent', paddingHorizontal: Theme.majorSpace, paddingTop: 20, paddingBottom: 20}}>
                 <View style={{ flex: 1, backgroundColor: 'white', borderRadius: 10, paddingHorizontal: Theme.majorSpace, paddingTop: 50, paddingBottom: 30 }}>

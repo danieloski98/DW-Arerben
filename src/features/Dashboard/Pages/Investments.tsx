@@ -36,6 +36,9 @@ export default function Investments() {
 
   React.useEffect(() => {
     (async function() {
+      // const res = await fetch(`${URL}/userprofile/dashboard/`);
+      // const j = await res.json();
+      // console.log(j);
       const result = await fetch(`${URL}/investment/`, {
         method: 'GET',
         headers: {
@@ -44,7 +47,8 @@ export default function Investments() {
       })
 
       const json = await result.json();
-      setInvestments(json.data.results);
+      console.log(json);
+      setInvestments(json.data);
       setLoading(false);
 
     })();
@@ -63,6 +67,10 @@ export default function Investments() {
   const onRefresh = async() => {
     setRefreshing(true);
     setLoading(true);
+    // const res = await fetch(`${URL}/userprofile/dashboard/`, {method: 'GET', headers: {'Content-Type': 'application/json', accept: 'application/json'}}, );
+    //   const j = await res.json();
+    //   console.log(j);
+
     const result = await fetch(`${URL}/investment/`, {
       method: 'GET',
       headers: {
@@ -72,7 +80,7 @@ export default function Investments() {
 
     const json = await result.json();
     console.log(json);
-    setInvestments(json.data.results);
+    setInvestments(json.data);
     setLoading(false);
     setRefreshing(false);
   };
@@ -81,8 +89,12 @@ export default function Investments() {
        <View style={style.parent}>
            <Tabbar />
            <InvestmentCards open={showModal} navigate={navigate} close={closeModal}/>
+
          <View style={style.scrollContainer}>
-            <ScrollView refreshControl={
+
+            <ScrollView
+            contentContainerStyle={{ zIndex: 1, paddingBottom: 55 }}
+            refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[Theme.primaryColor]} tintColor={Theme.primaryColor} title="fetching your investments" />
             }>
             {
@@ -96,17 +108,12 @@ export default function Investments() {
               investments.length < 1 ?
                 <View style={{ width: '100%', height: Theme.height/100* 20, backgroundColor: 'white', borderRadius: 10, justifyContent: 'center', paddingHorizontal: 20 }}>
                   <Text style={{ fontSize: Theme.header, fontWeight: '500', textAlign: 'center'}}>You have no current investments</Text>
-                  <View style={{ width: '100%', height: 50 }}>
+                  <View style={{ width: '100%', height: 50, marginTop: 20 }}>
                     <GradientButton text="Create Investment" onPress={() => setShowModal(true)} />
                   </View>
                 </View>
                 :
                 <View>
-                  <View style={{ width: '100%', height: 50, alignItems: 'flex-end'}}>
-                    <TouchableOpacity onPress={() => setShowModal(true)} style={{ width: 50, height: 50, borderRadius: 30, backgroundColor: Theme.primaryColor, justifyContent: 'center', alignItems: 'center', }}>
-                        <Feather name="plus" size={30} color="white" />
-                    </TouchableOpacity>
-                  </View>
                  <View style={{ marginTop: 20 }}>
                  {
                     investments.map((item, index) => (
@@ -118,8 +125,16 @@ export default function Investments() {
             }
             </View>
           }
-            </ScrollView>
+        </ScrollView>
          </View>
+
+         <View style={{ height: 100, width: '100%', backgroundColor: 'transparent', position: 'absolute', top: Theme.height/100*75, alignItems: 'flex-end', paddingRight: 20}}>
+           <TouchableOpacity onPress={() => setShowModal(true)} style={{ width: 50, height: 50, borderRadius: 30, backgroundColor: Theme.primaryColor, justifyContent: 'center', alignItems: 'center' }}>
+                        <Feather name="plus" size={30} color="white" />
+          </TouchableOpacity>
+           </View>
+
+
        </View>
     )
 }
@@ -131,5 +146,8 @@ const style = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+    paddingBottom: 0,
+  },
+  floatingBtn: {
   }
 });

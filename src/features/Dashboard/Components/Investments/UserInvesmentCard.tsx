@@ -22,7 +22,7 @@ export default function UserInvesmentCard(props: IINvestment) {
   return (
     <View style={style.parent}>
       <View style={style.header}>
-        <Text style={style.packText}>{checkPack(props.invest_pack)}</Text>
+        <Text style={style.packText}>{props.invest_pack_name}</Text>
         <View style={style.statusTextHolder}>
             <Text style={style.statusText}>{props.status}</Text>
         </View>
@@ -36,7 +36,28 @@ export default function UserInvesmentCard(props: IINvestment) {
       </View>
 
       <View style={style.container}>
-          <Text style={style.titleText}>Amount Date</Text>
+          <Text style={style.titleText}>Duration</Text>
+          <View style={style.contentBox}>
+            <Text>{props.Duration}</Text>
+          </View>
+      </View>
+
+      <View style={style.container}>
+          <Text style={style.titleText}>ROI</Text>
+          <View style={style.contentBox}>
+            <Text>{props.ROI}</Text>
+          </View>
+      </View>
+
+      <View style={style.container}>
+          <Text style={style.titleText}>Est ROI</Text>
+          <View style={style.contentBox}>
+            <Text>{props.EST_ROI}</Text>
+          </View>
+      </View>
+
+      <View style={style.container}>
+          <Text style={style.titleText}>Date</Text>
           <View style={style.contentBox}>
             <Text>{props.invest_date}</Text>
           </View>
@@ -85,19 +106,23 @@ const style = StyleSheet.create({
     color: '#069C79'
   },
   packText: {
-    color: 'grey',
+    color: 'black',
     fontSize: Theme.header,
+    fontWeight: '700'
   },
   container: {
     marginVertical: 10,
   },
   titleText: {
-    fontSize: Theme.header - 5,
+    fontSize: Theme.normalText,
+    fontWeight: '600',
+    color: 'grey'
   },
   contentBox: {
     padding: 10,
     borderRadius: 5,
     backgroundColor: 'whitesmoke',
+    marginTop: 5,
   },
   btnContainer: {
     width: '100%',

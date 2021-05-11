@@ -14,11 +14,13 @@ import PackageCard from '../PackageCard'
 
 
 export default function InvestmentCards(props: {open: boolean, navigate: Function, close: Function}) {
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [packages, setPackages] = React.useState([] as Array<INvestmentPackage>);
   const user = useUserDetails();
 
   React.useEffect(() => {
+   if (packages.length < 1) {
+     setLoading(true);
     (async function() {
       const result = await fetch(`${URL}/investment/investmentpack/`, {
         method: 'GET',
@@ -32,6 +34,9 @@ export default function InvestmentCards(props: {open: boolean, navigate: Functio
       setLoading(false);
 
     })();
+   }else {
+     setLoading(false);
+   }
   }, []);
 
 
