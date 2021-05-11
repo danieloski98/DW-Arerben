@@ -16,11 +16,11 @@ export default function ChangePasswordCard() {
                 <EditIcon />
             </View>
 
-            <Text style={{ marginTop: 20, textAlign: 'center', fontSize: Theme.header - 3, fontWeight: '700'}}>Change my DWA Password</Text>
+            <Text style={{ marginTop: 20, textAlign: 'center', fontSize: Theme.header, fontWeight: '700'}}>Change my DWA Password</Text>
 
             <Text style={{ marginTop: 10, textAlign: 'center', fontSize: Theme.normalText}}>You can change your DWA password Anytime</Text>
 
-            <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
+            <View style={{ width: '100%', height: 40, alignItems: 'center', marginTop: 20 }}>
                 <View style={{ width: '100%', height: 50 }}>
                     <GradientButton text="Change" onPress={() => navigation.navigate("changepassword", {section: 3})} />
                 </View>

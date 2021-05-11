@@ -31,9 +31,9 @@ export default function More() {
 
             <View style={{ flex: 0.1, height: 30, backgroundColor: 'white', bottom: 30, paddingHorizontal: Theme.majorSpace, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderBottomWidth: 1, borderBottomColor: 'lightgrey'}}>
                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1 }}>
-               <Text style={{ marginHorizontal: 30 }} onPress={() => navigation.navigate("registeragent")}>Register</Text>
-                <Text style={{ marginHorizontal: 30 }} onPress={() => navigation.navigate("referrals")}>My Referrals</Text>
-                <Text style={{ marginHorizontal: 30 }}>Commission History</Text>
+               <Text style={{ marginHorizontal: 30, fontSize: Theme.normalText }} onPress={() => navigation.navigate("registeragent")}>Register</Text>
+                <Text style={{ marginHorizontal: 30, fontSize: Theme.normalText }} onPress={() => navigation.navigate("referrals")}>My Referrals</Text>
+                <Text style={{ marginHorizontal: 30, fontSize: Theme.normalText }}>Commission History</Text>
                </ScrollView>
             </View>
 

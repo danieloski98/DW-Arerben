@@ -8,7 +8,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 export default function LinkCard() {
     return (
         <View style={{ flex: 1,  }}>
-            <Text style={{ fontSize: Theme.header - 4, fontWeight: '700'}}>Share your referral link</Text>
+            <Text style={{ fontSize: Theme.header, fontWeight: '700'}}>Share your referral link</Text>
             <Text style={{ fontSize: Theme.normalText, fontWeight: '300', marginTop: 10}}>You can share your referral link by copying and sending it OR share it via social media</Text>
             <View style={{ flex: 0.5, marginTop: 20, height: '30%'}}>
                 <View style={{ width: '100%', backgroundColor: '#FFEBE2', height: 50, borderRadius: 10, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10}}>

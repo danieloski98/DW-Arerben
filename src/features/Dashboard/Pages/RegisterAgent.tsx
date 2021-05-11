@@ -12,6 +12,8 @@ import { useFormik } from 'formik'
 import useUserDetails from '../../../Hooks/useUserDetails'
 import { useNavigation } from '@react-navigation/core'
 import { URL } from '../../../utils/Url'
+import SuccessModal from '../Components/Agent/SuccessModal'
+import * as DocumentPicker from 'expo-document-picker'
 
 const val = yup.object({
   guarantor_name: yup.string().required('This field is required'),
@@ -26,6 +28,8 @@ export default function RegisterAgent() {
   const [proof, setProof] = React.useState("");
   const [file, setFile] = React.useState({} as any);
   const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [uploadFile, setUploadFile] = React.useState({} as any);
 
   const user = useUserDetails();
   const navigation = useNavigation();
@@ -45,17 +49,16 @@ export default function RegisterAgent() {
       }
 
       // pick the image
-      const result = await imagepicker.launchImageLibraryAsync({
-          mediaTypes: imagepicker.MediaTypeOptions.Images,
-          quality: 1,
-          allowsEditing: true,
-          aspect: [4,4]
+      const res = await DocumentPicker.getDocumentAsync({
+        type: 'image/jpeg',
+        copyToCacheDirectory: true,
       })
 
-      console.log(result);
 
-      if(!result.cancelled) {
-          setSignature(result.uri);
+      if (res.type === 'success') {
+        console.log(res);
+        setFile(res);
+        setSignature(res.uri);
       }
     }
 
@@ -66,20 +69,31 @@ export default function RegisterAgent() {
           // return;
       }
 
-      // pick the image
-      const result = await imagepicker.launchImageLibraryAsync({
-          mediaTypes: imagepicker.MediaTypeOptions.Images,
-          quality: 1,
-          allowsEditing: true,
-          aspect: [4,4]
+      const res = await DocumentPicker.getDocumentAsync({
+        type: 'image/jpeg',
+        copyToCacheDirectory: true,
       })
 
-      console.log(result);
-
-      if(!result.cancelled) {
-          setProof(result.uri);
-          setFile(result);
+      if (res.type === 'success') {
+        console.log(res);
+        setUploadFile(res);
+        setProof(res.uri);
       }
+
+      // pick the image
+      // const result = await imagepicker.launchImageLibraryAsync({
+      //     mediaTypes: imagepicker.MediaTypeOptions.Images,
+      //     quality: 1,
+      //     allowsEditing: true,
+      //     aspect: [4,4]
+      // })
+
+      // console.log(result);
+
+      // if(!result.cancelled) {
+      //     setProof(result.uri);
+      //     setFile(result);
+      // }
     }
 
     const makeRequest = async() => {
@@ -100,16 +114,30 @@ export default function RegisterAgent() {
       // }
       else {
 
-            // arrange formData
+      // arrange formData
       const formData = new FormData();
       for (const pro in formik.values) {
         formData.append(pro, formik.values[pro]);
       }
 
 
-      const fet = await fetch(proof);
-      const blob = await fet.blob();
-      formData.append('proof_payment', file);
+      if (proof !== undefined) {
+        formData.append('proof_payment', {
+          name: uploadFile['name'],
+          uri: proof,
+          type: 'image/jpg'
+        });
+        console.log(JSON.stringify(uploadFile));
+      }
+
+      if (signature !== undefined) {
+        formData.append('required_doc', {
+          name: file['name'],
+          uri: signature,
+          type: 'image/jpg'
+        });
+        console.log(JSON.stringify(uploadFile));
+      }
 
       //
 
@@ -123,13 +151,18 @@ export default function RegisterAgent() {
       // const result = await UpdateUserController.initialUpdate(formData, {authorization: `Bearer ${user.user.access}`})
 
       const json = await result.json();
+      console.log(result.status)
 
       console.log(json);
-      if (result.status === 200) {
+      if (result.status === 201) {
         setLoading(false);
-        alert('Agent created');
+        setSuccess(true);
         // navigation.navigate('dashboard')
-      }else {
+      }else if (result.status === 400) {
+        setLoading(false);
+        alert(json['errors'][0]);
+      }
+      else {
         setLoading(false);
         alert('An error occured, please try again');
       }
@@ -141,9 +174,15 @@ export default function RegisterAgent() {
 
     }
 
+    const closeSuccess = () => {
+      setSuccess(false);
+      navigation.navigate('More')
+    }
+
     return (
         <View style={{ flex: 1}}>
            <CustomizableTabber name="DW-Investment Agent Form" />
+           <SuccessModal visible={success} close={closeSuccess} />
 
            <View style={{ flex: 0.95, margin: 20, padding: 20, backgroundColor: 'white', borderRadius: 10}}>
              <ScrollView showsVerticalScrollIndicator={false}>
@@ -211,7 +250,7 @@ export default function RegisterAgent() {
                 <Text style={{ fontSize: Theme.normalText, fontWeight: '700',}}>Attach Identity Image</Text>
                 <Text style={{ marginTop: 5, fontSize: Theme.normalText, color: 'grey' }}>Please attach either your NIN, Drivers License or International Passport</Text>
 
-                {/* <View style={styles.dashbox} >
+                <View style={styles.dashbox} >
                     <Text style={{ textAlign: 'center'}}>choose from device</Text>
                     {
                         signature !== "" ?
@@ -223,7 +262,7 @@ export default function RegisterAgent() {
                     <TouchableOpacity onPress={pickSignature} style={{ width: '40%', padding: Theme.majorSpace, backgroundColor: '#F5F5F5', alignItems: 'center', justifyContent: 'center', borderRadius: 10, marginTop: 10 }}>
                         <Text style={{ fontSize: Theme.normalText - 3, color: 'grey' }}>Choose Image</Text>
                     </TouchableOpacity>
-                </View> */}
+                </View>
                 <Text style={{ marginTop: 5, fontSize: Theme.normalText - 3 }}>File size must not excess 500kb</Text>
                 </View>
 

@@ -23,26 +23,26 @@ export default function UpdatePart() {
           <View style={style.borderBox}>
             <ProfileUpdate />
           </View>
-          <Text style={{ fontSize: Theme.header - 4, fontWeight: '700', marginTop: 10 }}>Fill the registration form</Text>
-          <Text style={{ marginTop: 3 }}>You need sign up as an DW agent.</Text>
+          <Text style={{ fontSize: Theme.header, fontWeight: '700', marginTop: 10 }}>Fill the registration form</Text>
+          <Text style={{ marginTop: 3, fontSize: Theme.normalText }}>You need sign up as an DW agent.</Text>
         </View>
 
         <View style={style.box}>
           <View style={style.borderBox}>
             <UpdateDocuments />
           </View>
-          <Text style={{ fontSize: Theme.header - 4, fontWeight: '700', marginTop: 10 }}>Wait for confirmation</Text>
-          <Text style={{ marginTop: 3 }}>We’ll notify you once it has been approved.</Text>
+          <Text style={{ fontSize: Theme.header, fontWeight: '700', marginTop: 10 }}>Wait for confirmation</Text>
+          <Text style={{ marginTop: 3, fontSize: Theme.normalText }}>We’ll notify you once it has been approved.</Text>
         </View>
 
         <View style={style.box}>
           <View style={style.borderBox}>
             <Password />
           </View>
-          <Text style={{ fontSize: Theme.header - 4, fontWeight: '700', marginTop: 10 }}>Claim your rewards</Text>
-          <Text style={{ marginTop: 3 }}>After the approval you will get your referral link.</Text>
+          <Text style={{ fontSize: Theme.header, fontWeight: '700', marginTop: 10 }}>Claim your rewards</Text>
+          <Text style={{ marginTop: 3, fontSize: Theme.normalText }}>After the approval you will get your referral link.</Text>
         </View>
-        
+
         <View style={{ width: '100%', height: 50,}}>
             <GradientButton text="Register as An Agent" onPress={() => navigation.navigate("registeragent")} />
         </View>
@@ -70,7 +70,7 @@ const style = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     paddingBottom: 30,
-    
+
   },
   box: {
     marginVertical: 20,

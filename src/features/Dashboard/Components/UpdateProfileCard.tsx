@@ -13,16 +13,16 @@ export default function UpdateProfileCard() {
     return (
         <View style={style.parent}>
 
-            <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
+            <View style={style.iconContainer}>
                 <EditIcon />
             </View>
 
-            <Text style={{ marginTop: 20, textAlign: 'center', fontSize: Theme.header -2, fontWeight: '700'}}>Update Profile</Text>
+            <Text style={style.headerText}>Update Profile</Text>
 
             <Text style={{ marginTop: 10, textAlign: 'center', fontSize: Theme.normalText}}>Complete your profile so you can set yourself up for earning and investing</Text>
 
-            <View style={{ width: '100%', height: 40, alignItems: 'center'}}>
-                <View style={{ width: '100%', height: 50 }}>
+            <View style={style.btnContainer}>
+                <View style={style.btn}>
                     <GradientButton text="Update Profile" onPress={() => navigation.navigate("update", {section: 1})} />
                 </View>
             </View>
@@ -40,5 +40,26 @@ const style = StyleSheet.create({
         padding: 15,
         justifyContent: 'center',
         marginBottom: 30,
+    },
+    iconContainer: {
+      width: '100%',
+      height: 40,
+      alignItems: 'center'
+    },
+    headerText: {
+      marginTop: 20,
+      textAlign: 'center',
+      fontSize: Theme.header,
+      fontWeight: '700'
+    },
+    btnContainer: {
+      width: '100%',
+      height: 40,
+      alignItems: 'center',
+      marginTop: 20
+    },
+    btn: {
+      width: '100%',
+      height: 50
     }
 })

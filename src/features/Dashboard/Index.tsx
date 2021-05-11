@@ -48,7 +48,7 @@ function Tabs() {
             <Bottomtabs.Screen name="Account" component={Account} options={{ tabBarIcon: ({ focused }) =>  <Icon iconName="user" name="Account" focused={focused} />,  }} />
 
 
-            <Bottomtabs.Screen name="Roi" component={ROI_History} options={{ tabBarIcon: ({ focused }) =>  <Icon iconName="award" name="ROI" focused={focused} />,  }} />
+            {/* <Bottomtabs.Screen name="Roi" component={ROI_History} options={{ tabBarIcon: ({ focused }) =>  <Icon iconName="award" name="ROI" focused={focused} />,  }} /> */}
 
 
             <Bottomtabs.Screen name="More" component={More} options={{ tabBarIcon: ({ focused }) =>  <Icon iconName="more-horizontal" name="More" focused={focused} />, }} />
