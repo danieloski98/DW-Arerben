@@ -40,7 +40,7 @@ export default function LoginForm(props: any) {
             Alert.alert("Please fill in the form correctly!")
             return;
         }
-        
+
         try {
 
         const formData = new FormData();
@@ -61,6 +61,7 @@ export default function LoginForm(props: any) {
 
         const json = await request.json();
         console.log(json);
+        console.log(request.status);
 
         switch(request.status) {
             case 201: {
@@ -71,7 +72,7 @@ export default function LoginForm(props: any) {
             }
             case 401: {
                 setLoading(false);
-                Alert.alert(`${json['detail']}`);
+                Alert.alert(`${json.errors.detail}`);
                 break;
             }
             default: {
@@ -88,7 +89,7 @@ export default function LoginForm(props: any) {
 
     return (
         <View style={style.parent}>
-            
+
             <View style={style.logoBox}>
                 <Text style={style.writeup}>Great! Let’s get you set up.</Text>
             </View>
