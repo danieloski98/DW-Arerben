@@ -38,7 +38,7 @@ export default function PackageCard(props: {properties: INvestmentPackage, navig
 
      const json = await (await result).json();
 
-     console.log(json);
+    //  console.log(json);
 
      setLoactions(json.data.results);
      setLoading(false);

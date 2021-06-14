@@ -6,9 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 import { useFormik } from 'formik'
 import * as yup from 'yup';
-import { URL } from '../../../utils/Url'
-import * as axios from 'axios';
-import useUserDetails, { IUSer } from '../../../Hooks/useUserDetails'
+import { URL } from '../../../utils/Url';
+import useUserDetails from '../../../Hooks/useUserDetails'
 
 // login schema
 
@@ -58,12 +57,13 @@ export default function LoginForm(props: any) {
         })
 
         const json: any = await request.json();
-        console.log(request.json);
         switch(request.status) {
             case 200: {
-                console.log(json);
                 setLoading(false);
-                userDetails.setUserAtom({ first_name: json['first_name'], email: json['email'], last_name: '', id: json['id'], access: json.tokens['access'], refresh: json.tokens['refresh']});
+                const data = json.data;
+                const token = json.data.tokens.access;
+                const refresh = json.data.tokens.refresh;
+                userDetails.setUserAtom({ first_name: data['first_name'], email: data['email'], last_name: '', id: data['id'], access: token, refresh: refresh });
                 navigation.navigate("dashboard");
                 break;
             }
@@ -72,8 +72,13 @@ export default function LoginForm(props: any) {
                 setLoading(false);
                 break;
             }
-
+            case 400: {
+              setLoading(false);
+              Alert.alert(json.errors[0]);
+              break;
+            }
             case 415: {
+                setLoading(false);
                 Alert.alert(json['detail'])
                 setLoading(false);
                 break;
@@ -84,7 +89,6 @@ export default function LoginForm(props: any) {
             }
         }
         } catch (error) {
-            console.log(error['detail'])
             setLoading(false);
             Alert.alert("Internal Server error");
         }

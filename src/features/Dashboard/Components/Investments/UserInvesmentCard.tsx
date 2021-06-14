@@ -4,8 +4,10 @@ import Button from '../../../../Components/Button';
 import GradientButton from '../../../../Components/GradientButton';
 import { Theme } from '../../../../theme';
 import { IINvestment } from '../../../../Types/Investment';
+import { useNavigation } from '@react-navigation/native'
 
 export default function UserInvesmentCard(props: IINvestment) {
+  const navigation = useNavigation();
   const checkPack = (pack: number) => {
     switch(pack) {
       case 1: {
@@ -65,10 +67,10 @@ export default function UserInvesmentCard(props: IINvestment) {
 
       <View style={style.btnContainer}>
         <View style={style.btnHolder}>
-          <GradientButton text="Terminate" onPress={() => alert('Pressed')} />
+          <GradientButton text="Terminate" onPress={() => navigation.navigate('terminate', {id:props.id})} />
         </View>
         <View style={style.btnHolder}>
-          <Button color="lightgrey" text="RollOver" onPress={() => alert('Roll over')} />
+          <Button color="lightgrey" text="RollOver" onPress={() => navigation.navigate('rollover', {id:props.id})} />
         </View>
       </View>
 

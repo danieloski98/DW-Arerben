@@ -20,6 +20,8 @@ import RegisterAgent from './Pages/RegisterAgent';
 import Referrals from './Pages/Referrals';
 import CreateInvestment from './Pages/CreateInvestment';
 import UpdateUserModal from './Components/Home/UpdateUserModal';
+import Cancel from './Pages/Terminate';
+import Rollover from './Pages/Rollover';
 
 
 function Icon(props: {iconName: any, name: string, focused: boolean}) {
@@ -70,6 +72,8 @@ const StackNavigator = () => (
         <Stack.Screen name="referrals" component={Referrals} options={{ headerShown: false }} />
         <Stack.Screen name="invest" component={CreateInvestment} options={{ headerShown: false }} />
         <Stack.Screen name="initialupdate" component={UpdateUserModal} options={{ headerShown: false }} />
+        <Stack.Screen name="terminate" component={Cancel} options={{ headerShown: false }} />
+        <Stack.Screen name="rollover" component={Rollover} options={{ headerShown: false }} />
     </Stack.Navigator>
 )
 

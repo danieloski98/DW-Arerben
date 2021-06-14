@@ -16,6 +16,7 @@ const SignupStack = createStackNavigator();
 const LoginRoutes = () => {
     return (
         <AuthStack.Navigator initialRouteName="index" headerMode="none">
+            {/* <AuthStack.Screen name="index" component={Loginindex} options={{ headerShown: false}} /> */}
             <AuthStack.Screen name="index" component={Loginindex} options={{ headerShown: false}} />
             <AuthStack.Screen name="login" component={Login} options={{ headerShown: false}} />
             <AuthStack.Screen name="signup" component={Signup} options={{ headerShown: false}} />

@@ -30,6 +30,12 @@ export default function LoginForm(props: any) {
         onSubmit: () => {},
     })
 
+    React.useEffect(() => {
+      return () => {
+        formik.resetForm();
+      }
+    }, [])
+
       // submit Function
       const  submit = async() => {
         if(!formik.dirty) {
