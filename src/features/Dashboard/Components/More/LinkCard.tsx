@@ -1,11 +1,27 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, Share} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Theme } from '../../../../theme'
 import TextBox from '../TextBox'
 import { FontAwesome5 } from '@expo/vector-icons'
+import { Alert } from 'react-native'
 
 export default function LinkCard() {
+  const share = async () => {
+    try {
+      const result = await Share.share({ message: 'this is from an app i am building'});
+
+      if (result.action === Share.sharedAction) {
+        if(result.activityType) {
+          Alert.alert(result.action);
+        }else {
+          console.log('shared')
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
     return (
         <View style={{ flex: 1,  }}>
             <Text style={{ fontSize: Theme.header, fontWeight: '700'}}>Share your referral link</Text>
@@ -17,10 +33,9 @@ export default function LinkCard() {
                 </View>
             </View>
             <View style={{ width: '100%', flexDirection: 'row', marginTop: 20 }}>
-                <FontAwesome5 name="facebook" size={30} color={Theme.primaryColor} />
-                <FontAwesome5 name="instagram" size={30} color={Theme.primaryColor} style={{ marginLeft: 10 }} />
-                <FontAwesome5 name="twitter" size={30} color={Theme.primaryColor} style={{ marginLeft: 10 }} />
-                <FontAwesome5 name="linkedin" size={30} color={Theme.primaryColor} style={{ marginLeft: 10 }} />
+                <TouchableOpacity onPress={share} style={{ width: Theme.width /100* 40, height: 50, backgroundColor: 'lightgrey', borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+                    <Text>Share</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

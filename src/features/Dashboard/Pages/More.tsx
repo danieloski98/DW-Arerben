@@ -15,7 +15,9 @@ export default function More() {
 
     return (
         <View style={{ flex: 1 }}>
+
             <Tabbar />
+
             <View style={{ flex: 0.9, marginBottom: 30 }}>
                 <ScrollView style={{ padding: Theme.majorSpace }} contentContainerStyle={{ paddingBottom: 50}} showsVerticalScrollIndicator={false} >
                     <UpdatePart />
