@@ -7,7 +7,6 @@ import { LinearGradient } from 'expo-linear-gradient'
 import GoogleIcon from '../../../assets/svgs/google';
 
 export default function Index(props: any) {
-    console.log(props)
     return (
         <View style={style.parent}>
             <View style={style.headerContainer}>
@@ -22,7 +21,7 @@ export default function Index(props: any) {
                         <View style={style.orangeCircle}>
 
                             <Image source={require('../../../assets/images/referral.png')} resizeMode="contain" style={[StyleSheet.absoluteFillObject, style.image]} />
-                            
+
                         </View>
 
                         <View style={style.floatingBanner}>
@@ -41,7 +40,7 @@ export default function Index(props: any) {
                     </View>
 
                     <View style={style.btnHolder}>
-                        
+
                         <LinearGradient
                         style={style.signupBtn}
                         start={{x: 0.0, y: 0.4}}
@@ -87,7 +86,7 @@ const style = StyleSheet.create({
         fontSize: Theme.header,
         fontWeight: '600',
         color: 'black'
-    }, 
+    },
     normalText: {
         fontSize: Theme.normalText,
         fontWeight: '300',
@@ -98,68 +97,68 @@ const style = StyleSheet.create({
         paddingHorizontal: 0
     },
     whitePart:{
-        width: '100%', 
-        height: '90%', 
-        backgroundColor: 'transparent', 
-        borderBottomLeftRadius: 5, 
-        borderBottomRightRadius: 5, 
+        width: '100%',
+        height: '90%',
+        backgroundColor: 'transparent',
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
         overflow: 'visible',
     },
     btnHolder: {
-        flex: 0.6, 
-        backgroundColor: 'white', 
-        marginHorizontal: 20, 
-        borderBottomRightRadius: 10, 
-        borderBottomLeftRadius: 10, 
-        justifyContent: 'flex-end', 
-        paddingBottom: 10, 
-        paddingHorizontal: 30, 
+        flex: 0.6,
+        backgroundColor: 'white',
+        marginHorizontal: 20,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10,
+        justifyContent: 'flex-end',
+        paddingBottom: 10,
+        paddingHorizontal: 30,
         transform: [
             {translateY: Theme.width / 100 * 65}
         ]
     },
     signupBtn: {
-        width: '100%', 
-        height: '15%', 
-        marginBottom: 5, 
-        backgroundColor: '#F46929', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        width: '100%',
+        height: '15%',
+        marginBottom: 5,
+        backgroundColor: '#F46929',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 10
     },
     loginBtn: {
-        width: '100%', 
-        height: '15%', 
-        marginBottom: 5, 
-        backgroundColor: 'black', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
+        width: '100%',
+        height: '15%',
+        marginBottom: 5,
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderRadius: 10
     },
     googleBtn: {
-        width: '100%', 
-        height: '15%', 
-        marginBottom: 5, 
-        backgroundColor: 'transparent', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        borderRadius: 10, 
-        borderWidth: 2, 
-        borderColor: '#222222', 
+        width: '100%',
+        height: '15%',
+        marginBottom: 5,
+        backgroundColor: 'transparent',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#222222',
         flexDirection: 'row'
     },
     banner: {
-        backgroundColor: 'transparent', 
-        width: Theme.width, 
-        height: Theme.width,  
+        backgroundColor: 'transparent',
+        width: Theme.width,
+        height: Theme.width,
         zIndex: 2
     },
     orangeCircle: {
-        flex: 1, 
-        borderRadius: Theme.width / 2, 
-        backgroundColor: '#FF892F', 
-        alignItems: 'flex-end', 
-        justifyContent: 'flex-end', 
+        flex: 1,
+        borderRadius: Theme.width / 2,
+        backgroundColor: '#FF892F',
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
         overflow: 'hidden'
     },
     image: {
@@ -168,37 +167,37 @@ const style = StyleSheet.create({
         ]
     },
     floatingBanner: {
-        width: 200, 
-        height: 100, 
-        backgroundColor: 'transparent', 
-        borderTopLeftRadius: 10, 
-        borderBottomLeftRadius: 10, 
-        position: 'absolute', 
-        elevation: 5, 
-        shadowColor: 'grey', 
-        shadowRadius: 3, 
-        shadowOffset: {width: 4, height: 8}, 
-        shadowOpacity: 0.7, 
+        width: 200,
+        height: 100,
+        backgroundColor: 'transparent',
+        borderTopLeftRadius: 10,
+        borderBottomLeftRadius: 10,
+        position: 'absolute',
+        elevation: 5,
+        shadowColor: 'grey',
+        shadowRadius: 3,
+        shadowOffset: {width: 4, height: 8},
+        shadowOpacity: 0.7,
         transform: [
             {translateX: Theme.width / 100 * 65},
             {translateY: Theme.height / 100 * 35}
         ]
     },
     ffbp: {
-        width: '40%', 
-        backgroundColor: '#111111', 
-        height: '30%', 
-        borderTopLeftRadius: 10, 
-        borderTopRightRadius: 10, 
-        justifyContent: 'center', 
+        width: '40%',
+        backgroundColor: '#111111',
+        height: '30%',
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        justifyContent: 'center',
         alignItems: 'center'
     },
     sfbp: {
-        flex: 1, 
-        backgroundColor: 'white', 
-        borderBottomLeftRadius: 10, 
-        borderBottomRightRadius: 10, 
-        padding: 10, 
+        flex: 1,
+        backgroundColor: 'white',
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        padding: 10,
         justifyContent: 'space-evenly'
     }
 });

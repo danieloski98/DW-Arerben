@@ -27,7 +27,7 @@ export default function InviteCard() {
                 <View style={{ width: '100%', height: 50, marginVertical: 3 }}>
                     <TextBox name="email" value={formik.values.email} onChange={formik.handleChange} />
                 </View>
-                <TouchableOpacity style={{ width: Theme.width /100* 40, height: 50, backgroundColor: 'lightgrey', borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+                <TouchableOpacity style={{ width: Theme.width /100* 85, height: 50, backgroundColor: 'lightgrey', borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
                     <Text>Send</Text>
                 </TouchableOpacity>
                 </View>

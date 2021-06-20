@@ -32,8 +32,8 @@ export default function LinkCard() {
                     <Text style={{ fontWeight: '900', color: Theme.primaryColor}}>COPY</Text>
                 </View>
             </View>
-            <View style={{ width: '100%', flexDirection: 'row', marginTop: 20 }}>
-                <TouchableOpacity onPress={share} style={{ width: Theme.width /100* 40, height: 50, backgroundColor: 'lightgrey', borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
+            <View style={{ width: '100%', flexDirection: 'row', marginTop: 40 }}>
+                <TouchableOpacity onPress={share} style={{ width: Theme.width /100* 85, height: 50, backgroundColor: 'lightgrey', borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginTop: 10}}>
                     <Text>Share</Text>
                 </TouchableOpacity>
             </View>

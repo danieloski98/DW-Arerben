@@ -28,7 +28,7 @@ function Icon(props: {iconName: any, name: string, focused: boolean}) {
     return(
         <View style={{alignItems: 'center', paddingVertical: 5}}>
             <Feather name={props.iconName} size={25} color={props.focused ? Theme.primaryColor:'grey'}/>
-            <Text style={{ color: props.focused ? 'grey':'lightgrey', fontSize: Theme.normalText -5, fontWeight: '400', marginTop: 5}}>{props.name}</Text>
+            <Text style={{ color: props.focused ? 'black':'lightgrey', fontSize: Theme.normalText, fontWeight: '400', marginTop: 5}}>{props.name}</Text>
         </View>
     )
 }

@@ -8,7 +8,7 @@ import SignupForm from './Compoents/SignupForm';
 
 export default function Signup(props: any) {
     return (
-        <View style={style.parent}>
+        <ScrollView style={style.parent}>
 
             <StatusBar barStyle="dark-content" backgroundColor="transparent" />
 
@@ -18,34 +18,34 @@ export default function Signup(props: any) {
             </View>
 
             <View style={style.form}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <View>
                     <SignupForm />
-                </ScrollView>
+                </View>
             </View>
 
-        </View>
+        </ScrollView>
     )
 }
 
 const style = StyleSheet.create({
     parent: {
         width: Theme.width,
-        height: Theme.height, 
-        backgroundColor: '#F8F9FB', 
-        paddingHorizontal: 20, 
+        height: Theme.height,
+        backgroundColor: '#F8F9FB',
+        paddingHorizontal: 20,
         paddingVertical: 30
     },
     navigationContainer: {
         flexDirection: 'row',
-        marginBottom: 20
+        marginBottom: 10
     },
     navigationText: {
         fontSize: Theme.header,
         marginLeft: 10
     },
     form: {
-        flex: 1, 
-        backgroundColor: 'white', 
+        flex: 1,
+        backgroundColor: 'white',
         borderRadius: 20,
         overflow: 'hidden'
     }

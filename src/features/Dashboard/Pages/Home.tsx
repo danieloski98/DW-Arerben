@@ -10,6 +10,7 @@ import {URL} from '../../../utils/Url'
 import UpdateCard from '../Components/UpdateCard'
 import VideoCard from '../Components/VideoCard'
 import UpdateUserModal from '../Components/Home/UpdateUserModal'
+import Stats from '../Components/Home/Stats'
 
 
 export default function Home() {
@@ -50,7 +51,7 @@ export default function Home() {
             <Tabbar />
 
             <View style={style.parent}>
-
+                <Stats />
                 {/* <UpdateCard /> */}
                 <VideoCard />
 
